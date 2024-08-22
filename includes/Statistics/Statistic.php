@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Statistics;
 
 use Pressidium\Limit_Login_Attempts\Interfaces\UI;
@@ -8,11 +9,12 @@ use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
 use Pressidium\Limit_Login_Attempts\Standalone\Button;
 use Pressidium\Limit_Login_Attempts\Options\Options;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-abstract class Statistic implements UI, HTML {
+abstract class Statistic implements UI, HTML
+{
 
     /**
      * @var Options An instance of `Options`.
@@ -50,7 +52,7 @@ abstract class Statistic implements UI, HTML {
      *
      * @return string
      */
-    abstract protected function get_message( $value );
+    abstract protected function get_message($value);
 
     /**
      * Parse the stored value.
@@ -59,7 +61,8 @@ abstract class Statistic implements UI, HTML {
      *
      * @return mixed
      */
-    protected function parse_value( $value ) {
+    protected function parse_value($value)
+    {
         return $value;
     }
 
@@ -68,33 +71,35 @@ abstract class Statistic implements UI, HTML {
      *
      * @param Options $options
      */
-    public function __construct( $options, $hooks_manager ) {
+    public function __construct($options, $hooks_manager)
+    {
         $this->options       = $options;
         $this->hooks_manager = $hooks_manager;
 
-        $stored_option = $this->options->get( $this->get_option_name() );
-        $this->value   = $this->parse_value( $stored_option );
+        $stored_option = $this->options->get($this->get_option_name());
+        $this->value   = $this->parse_value($stored_option);
     }
 
     /**
      * Render the statistic.
      */
-    public function render() {
-        if ( $this->value === 0 ) {
-            _e( 'There are no records.', 'prsdm-limit-login-attempts' );
+    public function render()
+    {
+        if ($this->value === 0) {
+            _e('There are no records.', 'prsdm-limit-login-attempts');
             return;
         }
 
         $button = $this->get_button();
 
-        if ( $button instanceof Button ) {
-            $this->hooks_manager->register( $button );
+        if ($button instanceof Button) {
+            $this->hooks_manager->register($button);
             $button->render();
         }
 
         printf(
             '<p>%s</p>',
-            esc_html( $this->get_message( $this->value ) )
+            esc_html($this->get_message($this->value))
         );
     }
 
@@ -103,11 +108,11 @@ abstract class Statistic implements UI, HTML {
      *
      * @return string
      */
-    public function get_html() {
+    public function get_html()
+    {
         ob_start();
         $this->render();
         $html = ob_get_clean();
         return $html;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Pages;
 
 use Pressidium\Limit_Login_Attempts\Hooks\Actions;
@@ -12,11 +13,12 @@ use Pressidium\Limit_Login_Attempts\Plugin;
 use const Pressidium\Limit_Login_Attempts\PLUGIN_URL;
 use const Pressidium\Limit_Login_Attempts\VERSION;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-abstract class Admin_Page implements Actions {
+abstract class Admin_Page implements Actions
+{
 
     /**
      * @var Section[] Page section objects.
@@ -33,7 +35,8 @@ abstract class Admin_Page implements Actions {
      *
      * @param Options $options An instance of `Options`.
      */
-    public function __construct( $options ) {
+    public function __construct($options)
+    {
         $this->options = $options;
     }
 
@@ -42,33 +45,35 @@ abstract class Admin_Page implements Actions {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions()
+    {
         return array(
-            'admin_menu'            => array( 'add_page' ),
-            'admin_init'            => array( 'register_sections' ),
-            'admin_notices'         => array( 'display_admin_notices' ),
-            'admin_enqueue_scripts' => array( 'enqueue_stylesheets' ),
+            'admin_menu'            => array('add_page'),
+            'admin_init'            => array('register_sections'),
+            'admin_notices'         => array('display_admin_notices'),
+            'admin_enqueue_scripts' => array('enqueue_stylesheets'),
         );
     }
 
     /**
      * Render this admin page.
      */
-    public function render() {
-        ?>
+    public function render()
+    {
+?>
 
         <div class="wrap">
             <form action="options.php" method="post">
-                <h1><?php echo esc_html( $this->get_page_title() ); ?></h1>
+                <h1><?php echo esc_html($this->get_page_title()); ?></h1>
                 <?php
-                settings_fields( $this->get_slug() );
-                do_settings_sections( $this->get_slug() );
-                submit_button( __( 'Change Options', 'prsdm-limit-login-attempts' ) );
+                settings_fields($this->get_slug());
+                do_settings_sections($this->get_slug());
+                submit_button(__('Change Options', 'prsdm-limit-login-attempts'));
                 ?>
             </form>
         </div>
 
-        <?php
+<?php
     }
 
     /**
@@ -77,27 +82,29 @@ abstract class Admin_Page implements Actions {
      * @param string $message Message to display.
      * @param string $type    Notice type ('success', 'error', or 'warning').
      */
-    protected function render_admin_notice( $message, $type ) {
-        $notice = new Admin_Notice( $message, $type );
+    protected function render_admin_notice($message, $type)
+    {
+        $notice = new Admin_Notice($message, $type);
         $notice->render();
     }
 
     /**
      * Display admin notices.
      */
-    public function display_admin_notices() {
+    public function display_admin_notices()
+    {
         settings_errors();
 
-        if ( isset( $_GET['action_result'] ) ) {
-            if ( $_GET['action_result'] === 'success' ) {
+        if (isset($_GET['action_result'])) {
+            if ($_GET['action_result'] === 'success') {
                 $this->render_admin_notice(
-                    esc_html( __( 'Action was performed successfully.', 'prsdm-limit-login-attempts' ) ),
+                    esc_html(__('Action was performed successfully.', 'prsdm-limit-login-attempts')),
                     Admin_Notice::SUCCESS
                 );
             } else {
                 /** @noinspection SpellCheckingInspection */
                 $this->render_admin_notice(
-                    esc_html( __( 'An error occurred. Couldn\'t perform action.', 'prsdm-limit-login-attempts' ) ),
+                    esc_html(__('An error occurred. Couldn\'t perform action.', 'prsdm-limit-login-attempts')),
                     Admin_Notice::ERROR
                 );
             }
@@ -109,8 +116,9 @@ abstract class Admin_Page implements Actions {
      *
      * @param string $hook_suffix The current admin page.
      */
-    public function enqueue_stylesheets( $hook_suffix ) {
-        if ( $hook_suffix !== 'toplevel_page_' . $this->get_slug() ) {
+    public function enqueue_stylesheets($hook_suffix)
+    {
+        if ($hook_suffix !== 'toplevel_page_' . $this->get_slug()) {
             return;
         }
 
@@ -125,13 +133,14 @@ abstract class Admin_Page implements Actions {
     /**
      * Add this page as a top-level menu page.
      */
-    public function add_page() {
+    public function add_page()
+    {
         add_menu_page(
             $this->get_page_title(),    // page_title
             $this->get_menu_title(),    // menu_title
             $this->get_capability(),    // capability
             $this->get_slug(),          // menu_slug
-            array( $this, 'render' ),   // callback function
+            array($this, 'render'),   // callback function
             $this->get_icon_url(),      // icon_url
             $this->get_position()       // position
         );
@@ -156,7 +165,8 @@ abstract class Admin_Page implements Actions {
      *
      * @return string
      */
-    protected function get_capability() {
+    protected function get_capability()
+    {
         return 'manage_options';
     }
 
@@ -172,7 +182,8 @@ abstract class Admin_Page implements Actions {
      *
      * @return string
      */
-    protected function get_icon_url() {
+    protected function get_icon_url()
+    {
         return '';
     }
 
@@ -181,7 +192,8 @@ abstract class Admin_Page implements Actions {
      *
      * @return int|null
      */
-    protected function get_position() {
+    protected function get_position()
+    {
         return null;
     }
 
@@ -202,15 +214,16 @@ abstract class Admin_Page implements Actions {
      *
      * @return Settings_Section
      */
-    protected function register_section( $section_id, $properties = array() ) {
-        $section = new Settings_Section( $section_id, $this->get_slug(), $this->options, $properties );
+    protected function register_section($section_id, $properties = array())
+    {
+        $section = new Settings_Section($section_id, $this->get_slug(), $this->options, $properties);
 
         $this->sections[] = $section;
 
         register_setting(
             $this->get_slug(),
             Plugin::PREFIX . '_' . $section_id,
-            array( 'sanitize_callback' => array( $section, 'sanitize' ) )
+            array('sanitize_callback' => array($section, 'sanitize'))
         );
 
         return $section;
@@ -224,11 +237,11 @@ abstract class Admin_Page implements Actions {
      *
      * @return Section
      */
-    protected function register_presentation_section( $section_id, $properties = array() ) {
-        $section = new Section( $section_id, $this->get_slug(), $this->options, $properties );
+    protected function register_presentation_section($section_id, $properties = array())
+    {
+        $section = new Section($section_id, $this->get_slug(), $this->options, $properties);
         $this->sections[] = $section;
 
         return $section;
     }
-
 }

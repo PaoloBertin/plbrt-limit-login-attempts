@@ -1,14 +1,16 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Login\State;
 
 use Pressidium\Limit_Login_Attempts\IP_Address;
 use Pressidium\Limit_Login_Attempts\Options\Options;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Retries {
+class Retries
+{
 
     /**
      * @var string IP address.
@@ -40,16 +42,17 @@ class Retries {
      *
      * @param Options $options
      */
-    public function __construct( $options ) {
+    public function __construct($options)
+    {
         $this->options       = $options;
-        $this->stored_option = $this->options->get( 'retries' );
+        $this->stored_option = $this->options->get('retries');
 
         $this->ip_address        = IP_Address::get_address();
         $this->timestamp         = null;
         $this->number_of_retries = 0;
 
-        if ( $this->has_stored_option() ) {
-            $ip_stored_data = $this->stored_option[ $this->ip_address ];
+        if ($this->has_stored_option()) {
+            $ip_stored_data = $this->stored_option[$this->ip_address];
 
             $this->timestamp         = $ip_stored_data['timestamp'];
             $this->number_of_retries = $ip_stored_data['retries'];
@@ -61,8 +64,9 @@ class Retries {
      *
      * @return bool
      */
-    public function has_stored_option_for_ip( $ip_address ) {
-        return isset( $this->stored_option[ $ip_address ] );
+    public function has_stored_option_for_ip($ip_address)
+    {
+        return isset($this->stored_option[$ip_address]);
     }
 
     /**
@@ -70,22 +74,25 @@ class Retries {
      *
      * @return bool
      */
-    private function has_stored_option() {
-        return $this->has_stored_option_for_ip( $this->ip_address );
+    private function has_stored_option()
+    {
+        return $this->has_stored_option_for_ip($this->ip_address);
     }
 
     /**
      * Increment retries for the currently processing IP address.
      */
-    public function increment() {
+    public function increment()
+    {
         $this->number_of_retries++;
-        $this->timestamp = time() + $this->options->get( 'hours_until_retries_reset' );
+        $this->timestamp = time() + $this->options->get('hours_until_retries_reset');
     }
 
     /**
      * Reset retries.
      */
-    public function reset() {
+    public function reset()
+    {
         $this->number_of_retries = 0;
         $this->timestamp         = null;
     }
@@ -93,8 +100,9 @@ class Retries {
     /**
      * Reset retries if no longer valid.
      */
-    public function maybe_reset() {
-        if ( ! is_null( $this->timestamp ) && time() >= $this->timestamp ) {
+    public function maybe_reset()
+    {
+        if (! is_null($this->timestamp) && time() >= $this->timestamp) {
             $this->reset();
         }
     }
@@ -102,12 +110,13 @@ class Retries {
     /**
      * Remove no longer valid retries.
      */
-    public function cleanup() {
+    public function cleanup()
+    {
         $now = time();
 
-        foreach ( $this->stored_option as $ip_address => $retries ) {
-            if ( $retries['timestamp'] < $now ) {
-                unset( $this->stored_option[ $ip_address ] );
+        foreach ($this->stored_option as $ip_address => $retries) {
+            if ($retries['timestamp'] < $now) {
+                unset($this->stored_option[$ip_address]);
             }
         }
     }
@@ -115,23 +124,25 @@ class Retries {
     /**
      * Add, update, or remove the data for this IP address before saving.
      */
-    private function prepare_stored_option() {
-        $this->stored_option[ $this->ip_address ] = array(
+    private function prepare_stored_option()
+    {
+        $this->stored_option[$this->ip_address] = array(
             'timestamp' => $this->timestamp,
             'retries'   => $this->number_of_retries
         );
-        
-        if ( $this->number_of_retries === 0 ) {
-            unset( $this->stored_option[ $this->ip_address ] );
+
+        if ($this->number_of_retries === 0) {
+            unset($this->stored_option[$this->ip_address]);
         }
     }
 
     /**
      * Update the option value in the database.
      */
-    public function save_option() {
+    public function save_option()
+    {
         $this->prepare_stored_option();
-        $this->options->set( 'retries', $this->stored_option );
+        $this->options->set('retries', $this->stored_option);
     }
 
     /**
@@ -139,8 +150,8 @@ class Retries {
      *
      * @return int
      */
-    public function get_number_of_retries() {
+    public function get_number_of_retries()
+    {
         return $this->number_of_retries;
     }
-
 }

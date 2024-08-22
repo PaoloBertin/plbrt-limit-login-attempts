@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Standalone;
 
 use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
@@ -10,11 +11,12 @@ use Pressidium\Limit_Login_Attempts\Options\Options;
 
 use Exception;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Lockout_Logs implements UI, HTML {
+class Lockout_Logs implements UI, HTML
+{
 
     const OPTION_NAME = 'lockout_logs';
 
@@ -33,7 +35,8 @@ class Lockout_Logs implements UI, HTML {
      *
      * @param Options $options An instance of `Options`.
      */
-    public function __construct( $options, $hooks_manager ) {
+    public function __construct($options, $hooks_manager)
+    {
         $this->options       = $options;
         $this->hooks_manager = $hooks_manager;
     }
@@ -41,25 +44,26 @@ class Lockout_Logs implements UI, HTML {
     /**
      * Display lockout logs.
      */
-    public function render() {
-        $lockouts_logs = $this->options->get( self::OPTION_NAME );
+    public function render()
+    {
+        $lockouts_logs = $this->options->get(self::OPTION_NAME);
 
-        if ( empty( $lockouts_logs ) ) {
+        if (empty($lockouts_logs)) {
             printf(
                 '<p>%s</p>',
-                __( 'There are no records.', 'prsdm-limit-login-attempts' )
+                __('There are no records.', 'prsdm-limit-login-attempts')
             );
             return;
         }
 
-        $table  = new Lockout_Logs_Table( $this->options );
+        $table  = new Lockout_Logs_Table($this->options);
         $button = new Button(
-            __( 'Clear Log', 'prsdm-limit-login-attempts' ),
+            __('Clear Log', 'prsdm-limit-login-attempts'),
             'clear_log',
-            array( $this, 'clear_logs' )
+            array($this, 'clear_logs')
         );
 
-        $this->hooks_manager->register( $button );
+        $this->hooks_manager->register($button);
 
         $button->render();
         $table->render();
@@ -72,7 +76,8 @@ class Lockout_Logs implements UI, HTML {
      *
      * @return string
      */
-    public function get_html() {
+    public function get_html()
+    {
         ob_start();
         $this->render();
         $html = ob_get_clean();
@@ -84,8 +89,9 @@ class Lockout_Logs implements UI, HTML {
      *
      * @return bool
      */
-    private function option_is_enabled() {
-        return $this->options->get( 'notify_on_lockout_log_ip' );
+    private function option_is_enabled()
+    {
+        return $this->options->get('notify_on_lockout_log_ip');
     }
 
     /**
@@ -94,20 +100,21 @@ class Lockout_Logs implements UI, HTML {
      * @param string $ip_address
      * @param string $username
      */
-    public function add_log( $ip_address, $username ) {
-        if ( ! self::option_is_enabled() ) {
+    public function add_log($ip_address, $username)
+    {
+        if (! self::option_is_enabled()) {
             return;
         }
-        
-        $lockouts_logs   = $this->options->get( self::OPTION_NAME );
+
+        $lockouts_logs   = $this->options->get(self::OPTION_NAME);
         $logged_lockouts = 0;
 
-        if ( isset( $lockouts_logs[ $ip_address ][ $username ] ) ) {
-            $logged_lockouts = $lockouts_logs[ $ip_address ][ $username ];
+        if (isset($lockouts_logs[$ip_address][$username])) {
+            $logged_lockouts = $lockouts_logs[$ip_address][$username];
         }
 
-        $lockouts_logs[ $ip_address ][ $username ] = $logged_lockouts + 1;
-        $this->options->set( self::OPTION_NAME, $lockouts_logs );
+        $lockouts_logs[$ip_address][$username] = $logged_lockouts + 1;
+        $this->options->set(self::OPTION_NAME, $lockouts_logs);
     }
 
     /**
@@ -115,15 +122,15 @@ class Lockout_Logs implements UI, HTML {
      *
      * @throws Exception If the lockout logs option couldn't be cleared.
      */
-    public function clear_logs() {
-        $removed = $this->options->remove( self::OPTION_NAME );
+    public function clear_logs()
+    {
+        $removed = $this->options->remove(self::OPTION_NAME);
 
-        if ( ! $removed ) {
+        if (! $removed) {
             /** @noinspection SpellCheckingInspection */
             throw new Exception(
-                __( 'Couldn\'t clear lockout logs', 'prsdm-limit-login-attempts' )
+                __('Couldn\'t clear lockout logs', 'prsdm-limit-login-attempts')
             );
         }
     }
-
 }

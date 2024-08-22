@@ -1,11 +1,13 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class User_Meta {
+class User_Meta
+{
 
     /**
      * @var int User ID.
@@ -23,7 +25,8 @@ class User_Meta {
      * @param int    $user_id  (Optional) User ID.
      * @param string $meta_key (Optional) Metadata name.
      */
-    public function __construct( $user_id = null, $meta_key = null ) {
+    public function __construct($user_id = null, $meta_key = null)
+    {
         $this->user_id  = $user_id;
         $this->meta_key = $meta_key;
     }
@@ -36,8 +39,9 @@ class User_Meta {
      *
      * @return bool
      */
-    public function exists() {
-        return ! empty( $this->get() );
+    public function exists()
+    {
+        return ! empty($this->get());
     }
 
     /**
@@ -50,8 +54,9 @@ class User_Meta {
      * @return mixed An array if $single is `false`. The value of the metadata
      *               field if $single is `true`. `false` for an invalid $user_id.
      */
-    public function get( $single = true ) {
-        return get_user_meta( $this->user_id, $this->meta_key, $single );
+    public function get($single = true)
+    {
+        return get_user_meta($this->user_id, $this->meta_key, $single);
     }
 
     /**
@@ -70,8 +75,9 @@ class User_Meta {
      *                  `false` on failure or if the value passed to the function is
      *                  the same as the one that is already in the database.
      */
-    public function set( $value, $prev_value = '' ) {
-        return update_user_meta( $this->user_id, $this->meta_key, $value, $prev_value );
+    public function set($value, $prev_value = '')
+    {
+        return update_user_meta($this->user_id, $this->meta_key, $value, $prev_value);
     }
 
     /**
@@ -85,12 +91,12 @@ class User_Meta {
      *
      * @return bool Whether the user meta field was successfully removed.
      */
-    public function remove( $meta_value = '' ) {
-        if ( $this->exists() ) {
+    public function remove($meta_value = '')
+    {
+        if ($this->exists()) {
             return false;
         }
 
-        return delete_user_meta( $this->user_id, $this->meta_key, $meta_value );
+        return delete_user_meta($this->user_id, $this->meta_key, $meta_value);
     }
-
 }

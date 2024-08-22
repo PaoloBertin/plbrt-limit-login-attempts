@@ -1,12 +1,14 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Hooks;
 
 // Prevent direct access to files
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-interface Actions {
+interface Actions
+{
     /**
      * Return the actions to register.
      *

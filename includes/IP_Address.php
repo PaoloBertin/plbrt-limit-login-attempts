@@ -1,11 +1,13 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class IP_Address {
+class IP_Address
+{
 
     const DIRECT = 'direct';
     const REVERSE_PROXY = 'reverse_proxy';
@@ -20,8 +22,9 @@ class IP_Address {
      *
      * @param string $connection_type 
      */
-    public static function init( $connection_type ) {
-        self::$address = self::get_ip( $connection_type );
+    public static function init($connection_type)
+    {
+        self::$address = self::get_ip($connection_type);
     }
 
     /**
@@ -29,9 +32,10 @@ class IP_Address {
      *
      * @return bool
      */
-    public static function is_whitelisted() {
+    public static function is_whitelisted()
+    {
         $filter_name = Plugin::PREFIX . '_whitelist_ip';
-        return apply_filters( $filter_name, false, self::$address ) === true;
+        return apply_filters($filter_name, false, self::$address) === true;
     }
 
     /**
@@ -41,17 +45,18 @@ class IP_Address {
      *
      * @return string
      */
-    private static function map_connection_type( $connection_type ) {
+    private static function map_connection_type($connection_type)
+    {
         $type_map = array(
             self::DIRECT        => 'REMOTE_ADDR',
             self::REVERSE_PROXY => 'HTTP_X_FORWARDED_FOR'
         );
 
-        if ( ! isset( $type_map[ $connection_type ] ) ) {
+        if (! isset($type_map[$connection_type])) {
             return null;
         }
 
-        return $type_map[ $connection_type ];
+        return $type_map[$connection_type];
     }
 
     /**
@@ -60,11 +65,12 @@ class IP_Address {
      * @param string $connection_type
      * @return string
      */
-    private static function get_ip( $connection_type ) {
-        $key = self::map_connection_type( $connection_type );
+    private static function get_ip($connection_type)
+    {
+        $key = self::map_connection_type($connection_type);
 
-        if ( isset( $_SERVER[ $key ] ) ) {
-            return $_SERVER[ $key ];
+        if (isset($_SERVER[$key])) {
+            return $_SERVER[$key];
         }
 
         return '';
@@ -75,8 +81,9 @@ class IP_Address {
      *
      * @return string
      */
-    public static function get_direct() {
-        return self::get_ip( self::DIRECT );
+    public static function get_direct()
+    {
+        return self::get_ip(self::DIRECT);
     }
 
     /**
@@ -84,8 +91,9 @@ class IP_Address {
      *
      * @return string
      */
-    public static function get_reverse_proxy() {
-        return self::get_ip( self::REVERSE_PROXY );
+    public static function get_reverse_proxy()
+    {
+        return self::get_ip(self::REVERSE_PROXY);
     }
 
     /**
@@ -93,9 +101,10 @@ class IP_Address {
      *
      * @return bool
      */
-    public static function is_behind_proxy() {
-        $key = self::map_connection_type( self::REVERSE_PROXY );
-        return isset( $_SERVER[ $key ] );
+    public static function is_behind_proxy()
+    {
+        $key = self::map_connection_type(self::REVERSE_PROXY);
+        return isset($_SERVER[$key]);
     }
 
     /**
@@ -103,8 +112,9 @@ class IP_Address {
      *
      * @return string
      */
-    public static function guess_connection_type() {
-        if ( self::is_behind_proxy() ) {
+    public static function guess_connection_type()
+    {
+        if (self::is_behind_proxy()) {
             return self::REVERSE_PROXY;
         }
 
@@ -116,13 +126,13 @@ class IP_Address {
      *
      * @return string
      */
-    public static function get_address() {
+    public static function get_address()
+    {
         // Default to 'direct' connection type, if it hasn't been initialized
-        if ( is_null( self::$address ) ) {
+        if (is_null(self::$address)) {
             self::$address = self::get_direct();
         }
 
         return self::$address;
     }
-
 }

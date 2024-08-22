@@ -1,9 +1,10 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Options;
 
 use Pressidium\Limit_Login_Attempts\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -12,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/plugins/settings/options-api/
  */
-class WP_Options implements Options {
+class WP_Options implements Options
+{
 
     /**
      * @var array Stored options.
@@ -46,19 +48,20 @@ class WP_Options implements Options {
     /**
      * Options constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $all_options = array();
 
-        foreach ( self::DEFAULT_OPTIONS as $section_id => $section_default_options ) {
+        foreach (self::DEFAULT_OPTIONS as $section_id => $section_default_options) {
             $db_option_name  = Plugin::PREFIX . '_' . $section_id;
-            $section_options = get_option( $db_option_name );
+            $section_options = get_option($db_option_name);
 
-            if ( $section_options === false ) {
-                add_option( $db_option_name, $section_default_options );
+            if ($section_options === false) {
+                add_option($db_option_name, $section_default_options);
                 $section_options = $section_default_options;
             }
 
-            $all_options = array_merge( $all_options, $section_options );
+            $all_options = array_merge($all_options, $section_options);
         }
 
         $this->options = $all_options;
@@ -71,12 +74,13 @@ class WP_Options implements Options {
      *
      * @return mixed
      */
-    public function get( $name ) {
-        if ( ! isset( $this->options[ $name ] ) ) {
+    public function get($name)
+    {
+        if (! isset($this->options[$name])) {
             return false;
         }
 
-        return $this->options[ $name ];
+        return $this->options[$name];
     }
 
     /**
@@ -88,13 +92,14 @@ class WP_Options implements Options {
      *
      * @return bool              Whether the option was added.
      */
-    public function set( $name, $value, $section_id = 'state' ) {
+    public function set($name, $value, $section_id = 'state')
+    {
         $db_option_name = Plugin::PREFIX . '_' . $section_id;
-        $stored_option  = get_option( $db_option_name );
+        $stored_option  = get_option($db_option_name);
 
-        $stored_option[ $name ] = $value;
+        $stored_option[$name] = $value;
 
-        return update_option( $db_option_name, $stored_option );
+        return update_option($db_option_name, $stored_option);
     }
 
     /**
@@ -105,14 +110,15 @@ class WP_Options implements Options {
      *
      * @return bool              Whether the option was removed.
      */
-    public function remove( $name, $section_id = 'state' ) {
+    public function remove($name, $section_id = 'state')
+    {
         $initial_value = array();
 
-        if ( isset( self::DEFAULT_OPTIONS[ $section_id ][ $name ] ) ) {
-            $initial_value = self::DEFAULT_OPTIONS[ $section_id ][ $name ];
+        if (isset(self::DEFAULT_OPTIONS[$section_id][$name])) {
+            $initial_value = self::DEFAULT_OPTIONS[$section_id][$name];
         }
 
-        return $this->set( $name, $initial_value, $section_id );
+        return $this->set($name, $initial_value, $section_id);
     }
 
     /**
@@ -120,8 +126,8 @@ class WP_Options implements Options {
      *
      * @return array
      */
-    public static function get_option_keys() {
-        return array_keys( self::DEFAULT_OPTIONS );
+    public static function get_option_keys()
+    {
+        return array_keys(self::DEFAULT_OPTIONS);
     }
-
 }

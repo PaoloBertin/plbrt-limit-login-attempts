@@ -1,15 +1,17 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Sections\Fields\Elements;
 
 use Pressidium\Limit_Login_Attempts\Interfaces\UI;
 use Pressidium\Limit_Login_Attempts\Options\Options;
 use Pressidium\Limit_Login_Attempts\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-abstract class Element implements UI {
+abstract class Element implements UI
+{
 
     const NUMBER_ELEMENT = 'Number_Element';
     const RADIO_ELEMENT = 'Radio_Element';
@@ -58,16 +60,17 @@ abstract class Element implements UI {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Element properties.
      */
-    public function __construct( $section_id, $options_instance, $properties = array() ) {
+    public function __construct($section_id, $options_instance, $properties = array())
+    {
         self::$number_of_elements++;
 
-        if ( $this instanceof Settings_Element_Interface ) {
+        if ($this instanceof Settings_Element_Interface) {
             $properties = wp_parse_args(
                 $properties,
                 array(
                     'label'     => sprintf(
                         /* translators: %s is the unique s/n of the element. */
-                        __( 'Element #%s', 'prsdm-limit-login-attempts' ),
+                        __('Element #%s', 'prsdm-limit-login-attempts'),
                         self::$number_of_elements
                     ),
                     'name'      => 'element_' . self::$number_of_elements,
@@ -79,13 +82,13 @@ abstract class Element implements UI {
 
             $this->label       = $properties['label'];
             $this->option_name = $properties['name'];
-            $this->name        = sprintf( '%s_%s[%s]', Plugin::PREFIX, $section_id, $this->option_name );
+            $this->name        = sprintf('%s_%s[%s]', Plugin::PREFIX, $section_id, $this->option_name);
             $this->validate    = $properties['validate'];
             $this->pre_write   = $properties['pre_write'];
-            $this->value       = $options_instance->get( $this->option_name );
+            $this->value       = $options_instance->get($this->option_name);
 
-            if ( is_callable( $properties['post_read'] ) ) {
-                $this->value = $properties['post_read']( $this->value );
+            if (is_callable($properties['post_read'])) {
+                $this->value = $properties['post_read']($this->value);
             }
         }
     }
@@ -95,7 +98,8 @@ abstract class Element implements UI {
      *
      * @return string
      */
-    public function get_option_name() {
+    public function get_option_name()
+    {
         return $this->option_name;
     }
 
@@ -104,7 +108,8 @@ abstract class Element implements UI {
      *
      * @return callable|null
      */
-    public function get_validate() {
+    public function get_validate()
+    {
         return $this->validate;
     }
 
@@ -113,7 +118,8 @@ abstract class Element implements UI {
      *
      * @return mixed
      */
-    public function get_value() {
+    public function get_value()
+    {
         return $this->value;
     }
 
@@ -122,8 +128,8 @@ abstract class Element implements UI {
      *
      * @return callable|null
      */
-    public function get_pre_write() {
+    public function get_pre_write()
+    {
         return $this->pre_write;
     }
-
 }

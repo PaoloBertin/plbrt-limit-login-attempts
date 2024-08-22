@@ -1,13 +1,15 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Notifications;
 
 use Pressidium\Limit_Login_Attempts\Utils;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Email {
+class Email
+{
 
     /**
      * @var string Email subject.
@@ -35,7 +37,8 @@ class Email {
      * @param string $subject
      * @param string $body
      */
-    public function __construct( $subject, $body ) {
+    public function __construct($subject, $body)
+    {
         $this->subject = $subject;
         $this->body    = $body;
     }
@@ -46,7 +49,8 @@ class Email {
      * @param string $email_address
      * @return Email
      */
-    public function from( $email_address ) {
+    public function from($email_address)
+    {
         $this->sender_email = $email_address;
         return $this;
     }
@@ -57,13 +61,14 @@ class Email {
      * @param string       $key
      * @param array|string $values
      */
-    private function add_headers( $key, $values ) {
+    private function add_headers($key, $values)
+    {
         $prefix = $key . ': ';
 
-        if ( is_array( $values ) ) {
+        if (is_array($values)) {
             $this->headers = array_merge(
                 $this->headers,
-                Utils::prepend_to_items( $prefix, $values )
+                Utils::prepend_to_items($prefix, $values)
             );
         } else {
             $this->headers[] = $prefix . $values;
@@ -76,8 +81,9 @@ class Email {
      * @param array|string $email_address
      * @return Email
      */
-    public function cc( $email_address ) {
-        $this->add_headers( 'Cc', $email_address );
+    public function cc($email_address)
+    {
+        $this->add_headers('Cc', $email_address);
         return $this;
     }
 
@@ -87,18 +93,20 @@ class Email {
      * @param array|string $email_address
      * @return Email
      */
-    public function bcc( $email_address ) {
-        $this->add_headers( 'Bcc', $email_address );
+    public function bcc($email_address)
+    {
+        $this->add_headers('Bcc', $email_address);
         return $this;
     }
 
     /**
      * Default the sender email to the admin email (if not already set).
      */
-    private function set_default_sender_address() {
-        if ( is_null( $this->sender_email ) ) {
+    private function set_default_sender_address()
+    {
+        if (is_null($this->sender_email)) {
             // Default to the admin email address
-            $this->from( get_bloginfo( 'admin_email' ) );
+            $this->from(get_bloginfo('admin_email'));
         }
     }
 
@@ -107,11 +115,12 @@ class Email {
      *
      * @return array
      */
-    private function get_headers() {
+    private function get_headers()
+    {
         $from_header = 'From: ' . $this->sender_email;
-        $headers     = array_merge( $this->headers, array( $from_header ) );
+        $headers     = array_merge($this->headers, array($from_header));
 
-        return array_unique( $headers );
+        return array_unique($headers);
     }
 
     /**
@@ -120,10 +129,11 @@ class Email {
      * @param array|string $to Recipient email address(es).
      * @return bool Whether the email was sent successfully.
      */
-    public function send( $to ) {
+    public function send($to)
+    {
         $this->set_default_sender_address();
-        
-        return wp_mail( $to, $this->subject, $this->body, $this->get_headers() );
+
+        return wp_mail($to, $this->subject, $this->body, $this->get_headers());
     }
 
     /**
@@ -131,9 +141,9 @@ class Email {
      *
      * @return bool Whether the email was sent successfully.
      */
-    public function send_to_admin() {
-        $admin_email = get_bloginfo( 'admin_email' );
-        return $this->send( $admin_email );
+    public function send_to_admin()
+    {
+        $admin_email = get_bloginfo('admin_email');
+        return $this->send($admin_email);
     }
-
 }

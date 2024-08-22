@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Login;
 
 use Pressidium\Limit_Login_Attempts\Hooks\Actions;
@@ -12,11 +13,12 @@ use Pressidium\Limit_Login_Attempts\Plugin;
 use WP_Error;
 use WP_User;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Login_Attempts implements Actions, Filters {
+class Login_Attempts implements Actions, Filters
+{
 
     /**
      * @var Retries
@@ -40,7 +42,8 @@ class Login_Attempts implements Actions, Filters {
      * @param Lockouts    $lockouts
      * @param Login_Error $login_error
      */
-    public function __construct( $retries, $lockouts, $login_error ) {
+    public function __construct($retries, $lockouts, $login_error)
+    {
         $this->retries     = $retries;
         $this->lockouts    = $lockouts;
         $this->login_error = $login_error;
@@ -51,18 +54,20 @@ class Login_Attempts implements Actions, Filters {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions()
+    {
         return array(
-            'wp_login_failed' => array( 'handle_failed_login' ),
+            'wp_login_failed' => array('handle_failed_login'),
         );
     }
 
     /**
      * Return the filters to register.
      */
-    public function get_filters() {
+    public function get_filters()
+    {
         return array(
-            'wp_authenticate_user' => array( 'handle_login_attempt' ),
+            'wp_authenticate_user' => array('handle_login_attempt'),
         );
     }
 
@@ -72,7 +77,8 @@ class Login_Attempts implements Actions, Filters {
      * @param Retries  $retries
      * @param Lockouts $lockouts
      */
-    public function cleanup_and_update_options( $retries, $lockouts ) {
+    public function cleanup_and_update_options($retries, $lockouts)
+    {
         $retries->cleanup();
         $lockouts->cleanup();
 
@@ -88,8 +94,9 @@ class Login_Attempts implements Actions, Filters {
      *
      * @return bool
      */
-    private function should_allow_to_login() {
-        if ( IP_Address::is_whitelisted() ) {
+    private function should_allow_to_login()
+    {
+        if (IP_Address::is_whitelisted()) {
             return true;
         }
 
@@ -103,13 +110,14 @@ class Login_Attempts implements Actions, Filters {
      *
      * @return WP_User|WP_Error
      */
-    public function handle_login_attempt( $user ) {
-        if ( is_wp_error( $user ) || $this->should_allow_to_login() ) {
+    public function handle_login_attempt($user)
+    {
+        if (is_wp_error($user) || $this->should_allow_to_login()) {
             return $user;
         }
 
         $error = new WP_Error();
-        $error->add( Login_Error::ERROR_CODE, $this->login_error->get_error_message() );
+        $error->add(Login_Error::ERROR_CODE, $this->login_error->get_error_message());
 
         return $error;
     }
@@ -119,18 +127,19 @@ class Login_Attempts implements Actions, Filters {
      *
      * @param string $username Username or email address.
      */
-    public function handle_failed_login( $username ) {
+    public function handle_failed_login($username)
+    {
         $this->lockouts->username = $username;
 
-        if ( $this->lockouts->is_currently_locked_out() ) {
+        if ($this->lockouts->is_currently_locked_out()) {
             return;
         }
 
         $this->retries->maybe_reset();
         $this->retries->increment();
 
-        if ( ! $this->lockouts->should_get_locked_out() ) {
-            $this->cleanup_and_update_options( $this->retries, $this->lockouts );
+        if (! $this->lockouts->should_get_locked_out()) {
+            $this->cleanup_and_update_options($this->retries, $this->lockouts);
             return;
         }
 
@@ -139,16 +148,16 @@ class Login_Attempts implements Actions, Filters {
         $number_of_retries = $this->retries->get_number_of_retries();
 
         $lockout_type = $this->lockouts->lockout();
-        $this->cleanup_and_update_options( $this->retries, $this->lockouts );
+        $this->cleanup_and_update_options($this->retries, $this->lockouts);
 
         /**
-		 * Fires when an IP address gets locked out.
-		 *
-		 * @param string   $username          Username or email address.
+         * Fires when an IP address gets locked out.
+         *
+         * @param string   $username          Username or email address.
          * @param int      $number_of_retries Number of retries.
          * @param Lockouts $lockouts          An instance of `Lockouts`.
          * @param string   $lockout_type      Lockout type.
-		 */
+         */
         do_action(
             Plugin::PREFIX . '_just_locked_out',
             $username,
@@ -157,5 +166,4 @@ class Login_Attempts implements Actions, Filters {
             $lockout_type
         );
     }
-
 }

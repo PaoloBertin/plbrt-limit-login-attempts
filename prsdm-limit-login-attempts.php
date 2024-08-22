@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: PRSDM Limit Login Attempts
  * Plugin URI: https://pressidium.com
@@ -27,7 +28,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 namespace Pressidium\Limit_Login_Attempts;
 
@@ -44,11 +45,12 @@ use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
 use Pressidium\Limit_Login_Attempts\Standalone\Lockout_Logs;
 use Pressidium\Limit_Login_Attempts\Notifications\Email_Notification;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Plugin {
+class Plugin
+{
 
     const PREFIX = 'prsdm_limit_login_attempts';
 
@@ -65,17 +67,19 @@ class Plugin {
     /**
      * Plugin constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->require_files();
         $this->setup_constants();
-        
-        add_action( 'plugins_loaded', array( $this, 'init' ) );
+
+        add_action('plugins_loaded', array($this, 'init'));
     }
 
     /**
      * Require files.
      */
-    private function require_files() {
+    private function require_files()
+    {
         require_once __DIR__ . '/autoload.php';
 
         $autoloader = new Autoloader();
@@ -85,49 +89,50 @@ class Plugin {
     /**
      * Setup constants.
      */
-    private function setup_constants() {
-        if ( ! defined( __NAMESPACE__ . '\PLUGIN_URL' ) ) {
-            define( __NAMESPACE__ . '\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+    private function setup_constants()
+    {
+        if (! defined(__NAMESPACE__ . '\PLUGIN_URL')) {
+            define(__NAMESPACE__ . '\PLUGIN_URL', plugin_dir_url(__FILE__));
         }
 
-        if ( ! defined( __NAMESPACE__ . '\VERSION' ) ) {
-            define( __NAMESPACE__ . '\VERSION', '1.0.0' );
+        if (! defined(__NAMESPACE__ . '\VERSION')) {
+            define(__NAMESPACE__ . '\VERSION', '1.0.0');
         }
     }
 
     /**
      * Initialize the plugin once activated plugins have been loaded.
      */
-    public function init() {
+    public function init()
+    {
         $this->options = new WP_Options();
         $this->hooks_manager = new Hooks_Manager();
 
-        IP_Address::init( $this->options->get( 'site_connection' ) );
+        IP_Address::init($this->options->get('site_connection'));
 
-        $lockout_logs = new Lockout_Logs( $this->options, $this->hooks_manager );
+        $lockout_logs = new Lockout_Logs($this->options, $this->hooks_manager);
 
-        $retries  = new Retries( $this->options );
-        $lockouts = new Lockouts( $this->options, $retries, $lockout_logs );
+        $retries  = new Retries($this->options);
+        $lockouts = new Lockouts($this->options, $retries, $lockout_logs);
 
-        $settings_page = new Settings_Page( $this->options, $this->hooks_manager, $lockout_logs );
-        $this->hooks_manager->register( $settings_page );
+        $settings_page = new Settings_Page($this->options, $this->hooks_manager, $lockout_logs);
+        $this->hooks_manager->register($settings_page);
 
-        $login_error    = new Login_Error( $this->options, $retries, $lockouts );
-        $login_attempts = new Login_Attempts( $retries, $lockouts, $login_error );
-        $this->hooks_manager->register( $login_error );
-        $this->hooks_manager->register( $login_attempts );
+        $login_error    = new Login_Error($this->options, $retries, $lockouts);
+        $login_attempts = new Login_Attempts($retries, $lockouts, $login_error);
+        $this->hooks_manager->register($login_error);
+        $this->hooks_manager->register($login_attempts);
 
-        $should_handle_cookie_login = $this->options->get( 'handle_cookie_login' ) === 'yes';
+        $should_handle_cookie_login = $this->options->get('handle_cookie_login') === 'yes';
 
-        if ( $should_handle_cookie_login ) {
-            $cookie_login = new Cookie_Login( $login_attempts, $lockouts );
-            $this->hooks_manager->register( $cookie_login );
+        if ($should_handle_cookie_login) {
+            $cookie_login = new Cookie_Login($login_attempts, $lockouts);
+            $this->hooks_manager->register($cookie_login);
         }
 
-        $email_notification = new Email_Notification( $this->options );
-        $this->hooks_manager->register( $email_notification );
+        $email_notification = new Email_Notification($this->options);
+        $this->hooks_manager->register($email_notification);
     }
-
 }
 
 new Plugin();

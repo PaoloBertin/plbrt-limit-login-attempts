@@ -1,14 +1,16 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Sections;
 
 use Pressidium\Limit_Login_Attempts\Options\Options;
 use Pressidium\Limit_Login_Attempts\Sections\Fields\Field;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Section {
+class Section
+{
 
     /**
      * @var Field[] Section field objects.
@@ -48,11 +50,12 @@ class Section {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Properties.
      */
-    public function __construct( $id, $page, $options_instance, $properties = array() ) {
+    public function __construct($id, $page, $options_instance, $properties = array())
+    {
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __( 'Section', 'prsdm-limit-login-attempts' ),
+                'title'       => __('Section', 'prsdm-limit-login-attempts'),
                 'description' => ''
             )
         );
@@ -67,7 +70,7 @@ class Section {
         add_settings_section(
             $id,
             $this->title,
-            array( $this, 'print_description' ),
+            array($this, 'print_description'),
             $page
         );
     }
@@ -75,8 +78,9 @@ class Section {
     /**
      * Print the section description.
      */
-    public function print_description() {
-        echo esc_html( $this->description );
+    public function print_description()
+    {
+        echo esc_html($this->description);
     }
 
     /**
@@ -84,12 +88,12 @@ class Section {
      *
      * @param array $properties Field properties.
      */
-    public function add_field( $properties ) {
-        $field = new Field( $this->id, $this->page, $this->options, $properties );
+    public function add_field($properties)
+    {
+        $field = new Field($this->id, $this->page, $this->options, $properties);
 
         $this->fields[] = $field;
 
         return $field;
     }
-
 }

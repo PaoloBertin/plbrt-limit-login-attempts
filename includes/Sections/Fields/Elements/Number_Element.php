@@ -1,31 +1,33 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Sections\Fields\Elements;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Number_Element extends Element implements Settings_Element_Interface {
+class Number_Element extends Element implements Settings_Element_Interface
+{
 
     /**
      * Render the element.
      */
-    public function render() {
-        ?>
+    public function render()
+    {
+?>
 
         <fieldset>
             <label>
                 <input
                     type="number"
-                    name="<?php echo esc_attr( $this->name ); ?>"
-                    id="<?php echo esc_attr( $this->name ); ?>"
-                    value="<?php echo esc_attr( $this->value ); ?>"
-                />
-                <?php echo esc_html( $this->label ); ?>
+                    name="<?php echo esc_attr($this->name); ?>"
+                    id="<?php echo esc_attr($this->name); ?>"
+                    value="<?php echo esc_attr($this->value); ?>" />
+                <?php echo esc_html($this->label); ?>
             </label>
         </fieldset>
 
-        <?php
+<?php
     }
 
     /**
@@ -35,8 +37,8 @@ class Number_Element extends Element implements Settings_Element_Interface {
      *
      * @return int
      */
-    public function sanitize( $option_value ) {
-        return intval( $option_value );
+    public function sanitize($option_value)
+    {
+        return intval($option_value);
     }
-
 }

@@ -1,16 +1,18 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Notifications;
 
 use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
 use Pressidium\Limit_Login_Attempts\IP_Address;
 use Pressidium\Limit_Login_Attempts\Utils;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Email_Notification extends Notification {
-    
+class Email_Notification extends Notification
+{
+
     /**
      * @var string Username or email address.
      */
@@ -44,14 +46,15 @@ class Email_Notification extends Notification {
      * @param Lockouts $lockouts          An instance of `Lockouts`.
      * @param string   $lockout_type      Lockout type.
      */
-    public function init( $username, $number_of_retries, $lockouts, $lockout_type ) {
+    public function init($username, $number_of_retries, $lockouts, $lockout_type)
+    {
         $this->username = $username;
 
         $this->number_of_retries = $number_of_retries;
-        
+
         $this->number_of_lockouts = $lockouts->get_number_of_lockouts();
         $this->is_long_lockout    = $lockout_type === Lockouts::LONG;
-        $this->lockout_duration   = $lockouts->get_lockout_duration( $lockout_type );
+        $this->lockout_duration   = $lockouts->get_lockout_duration($lockout_type);
 
         $this->maybe_send();
     }
@@ -61,45 +64,46 @@ class Email_Notification extends Notification {
      *
      * @return email An instance of `Email`.
      */
-    private function build() {
-        $duration_formatted = Utils::format_duration( $this->lockout_duration );
-        
+    private function build()
+    {
+        $duration_formatted = Utils::format_duration($this->lockout_duration);
+
         $blog_name = get_bloginfo();
 
         $message = sprintf(
-            __( '%d failed login attempts (%d lockout(s)) from IP: %s', 'prsdm-limit-login-attempts' ),
+            __('%d failed login attempts (%d lockout(s)) from IP: %s', 'prsdm-limit-login-attempts'),
             $this->number_of_retries,
             $this->number_of_lockouts,
             IP_Address::get_address()
         ) . "\r\n\r\n";
 
-        if ( ! empty( $this->username ) ) {
+        if (! empty($this->username)) {
             $message .= sprintf(
-                __( 'Last user attempted: %s', 'prsdm-limit-login-attempts' ),
+                __('Last user attempted: %s', 'prsdm-limit-login-attempts'),
                 $this->username
             ) . "\r\n\r\n";
         }
 
-        if ( IP_Address::is_whitelisted() ) {
+        if (IP_Address::is_whitelisted()) {
             $subject = sprintf(
-                __( '[%s] Failed login attempts from whitelisted IP', 'prsdm-limit-login-attempts' ),
+                __('[%s] Failed login attempts from whitelisted IP', 'prsdm-limit-login-attempts'),
                 $blog_name
             );
 
-            $message .= __( 'IP was NOT blocked because of external whitelist', 'prsdm-limit-login-attempts' );
+            $message .= __('IP was NOT blocked because of external whitelist', 'prsdm-limit-login-attempts');
         } else {
             $subject = sprintf(
-                __( '[%s] Too many failed login attempts', 'prsdm-limit-login-attempts' ),
+                __('[%s] Too many failed login attempts', 'prsdm-limit-login-attempts'),
                 $blog_name
             );
 
             $message .= sprintf(
-                __( 'IP was blocked for %s', 'prsdm-limit-login-attempts' ),
+                __('IP was blocked for %s', 'prsdm-limit-login-attempts'),
                 $duration_formatted
             );
         }
 
-        return new Email( $subject, $message );
+        return new Email($subject, $message);
     }
 
     /**
@@ -107,7 +111,8 @@ class Email_Notification extends Notification {
      *
      * @return string
      */
-    protected function get_option_name() {
+    protected function get_option_name()
+    {
         return 'notify_on_lockout_email_to_admin';
     }
 
@@ -116,20 +121,21 @@ class Email_Notification extends Notification {
      *
      * @return bool
      */
-    protected function should_send() {
-        if ( ! parent::should_send() ) {
+    protected function should_send()
+    {
+        if (! parent::should_send()) {
             return false;
         }
 
-        if ( $this->is_long_lockout ) {
+        if ($this->is_long_lockout) {
             // Always notify on long lockouts
             return true;
         }
 
-        $allowed_retries    = $this->options->get( 'allowed_retries' );
+        $allowed_retries    = $this->options->get('allowed_retries');
         $number_of_lockouts = $this->number_of_retries / $allowed_retries;
 
-        $notify_after_that_many_lockouts = $this->options->get( 'notify_after_lockouts' );
+        $notify_after_that_many_lockouts = $this->options->get('notify_after_lockouts');
 
         return $number_of_lockouts % $notify_after_that_many_lockouts === 0;
     }
@@ -139,13 +145,13 @@ class Email_Notification extends Notification {
      *
      * @return bool Whether an email was sent.
      */
-    public function maybe_send() {
-        if ( $this->should_send() ) {
+    public function maybe_send()
+    {
+        if ($this->should_send()) {
             $email = $this->build();
             return $email->send_to_admin();
         }
 
         return false;
     }
-
 }

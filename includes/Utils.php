@@ -1,11 +1,13 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Utils {
+class Utils
+{
 
     /**
      * Check whether the given value is greater than zero.
@@ -14,7 +16,8 @@ class Utils {
      *
      * @return bool
      */
-    public static function is_greater_than_zero( $value ) {
+    public static function is_greater_than_zero($value)
+    {
         return $value > 0;
     }
 
@@ -25,7 +28,8 @@ class Utils {
      *
      * @return int
      */
-    public static function hours_to_seconds( $hours ) {
+    public static function hours_to_seconds($hours)
+    {
         return $hours * HOUR_IN_SECONDS;
     }
 
@@ -36,7 +40,8 @@ class Utils {
      *
      * @return int
      */
-    public static function seconds_to_hours( $seconds ) {
+    public static function seconds_to_hours($seconds)
+    {
         return $seconds / HOUR_IN_SECONDS;
     }
 
@@ -47,7 +52,8 @@ class Utils {
      *
      * @return int
      */
-    public static function minutes_to_seconds( $minutes ) {
+    public static function minutes_to_seconds($minutes)
+    {
         return $minutes * MINUTE_IN_SECONDS;
     }
 
@@ -58,7 +64,8 @@ class Utils {
      *
      * @return int
      */
-    public static function seconds_to_minutes( $seconds ) {
+    public static function seconds_to_minutes($seconds)
+    {
         return $seconds / MINUTE_IN_SECONDS;
     }
 
@@ -69,28 +76,29 @@ class Utils {
      *
      * @return string 
      */
-    public static function format_duration( $seconds ) {
-        $hours = floor( self::seconds_to_hours( $seconds ) );
-        $seconds = $seconds - self::hours_to_seconds( $hours );
+    public static function format_duration($seconds)
+    {
+        $hours = floor(self::seconds_to_hours($seconds));
+        $seconds = $seconds - self::hours_to_seconds($hours);
 
-        $minutes = floor( self::seconds_to_minutes( $seconds ) );
-        $seconds = $seconds - self::minutes_to_seconds( $minutes );
+        $minutes = floor(self::seconds_to_minutes($seconds));
+        $seconds = $seconds - self::minutes_to_seconds($minutes);
 
         $duration = array(
-            _n( 'hour', 'hours', $hours, 'prsdm-limit-login-attempts' )       => $hours,
-            _n( 'minute', 'minutes', $minutes, 'prsdm-limit-login-attempts' ) => $minutes,
-            _n( 'second', 'seconds', $seconds, 'prsdm-limit-login-attempts' ) => $seconds
+            _n('hour', 'hours', $hours, 'prsdm-limit-login-attempts')       => $hours,
+            _n('minute', 'minutes', $minutes, 'prsdm-limit-login-attempts') => $minutes,
+            _n('second', 'seconds', $seconds, 'prsdm-limit-login-attempts') => $seconds
         );
 
         $formatted_duration = array();
 
-        foreach ( $duration as $unit => $value ) {
-            if ( $value > 0 ) {
+        foreach ($duration as $unit => $value) {
+            if ($value > 0) {
                 $formatted_duration[] = $value . ' ' . $unit;
             }
         }
 
-        return implode( ', ', $formatted_duration );
+        return implode(', ', $formatted_duration);
     }
 
     /**
@@ -100,11 +108,12 @@ class Utils {
      *
      * @return array
      */
-    public static function remove_last_item_if_empty( $array ) {        
-        $last_item = end( $array );
-        
-        if ( empty( $last_item ) ) {
-            array_pop( $array );
+    public static function remove_last_item_if_empty($array)
+    {
+        $last_item = end($array);
+
+        if (empty($last_item)) {
+            array_pop($array);
         }
 
         return $array;
@@ -118,10 +127,11 @@ class Utils {
      *
      * @return array
      */
-    public static function prepend_to_items( $prefix, $array ) {
-        return array_map( function( $item ) use ( $prefix ) {
+    public static function prepend_to_items($prefix, $array)
+    {
+        return array_map(function ($item) use ($prefix) {
             return $prefix . $item;
-        }, $array );
+        }, $array);
     }
 
     /**
@@ -132,16 +142,16 @@ class Utils {
      *
      * @return mixed
      */
-    public static function default_value( &$value, $default ) {
-        if ( isset( $value ) ) {
+    public static function default_value(&$value, $default)
+    {
+        if (isset($value)) {
             return $value;
         }
 
-        if ( isset( $default ) ) {
+        if (isset($default)) {
             return $default;
         }
 
         return null;
     }
-
 }

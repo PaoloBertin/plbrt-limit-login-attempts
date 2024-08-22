@@ -1,14 +1,16 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Sections\Fields;
 
 use Pressidium\Limit_Login_Attempts\Options\Options;
 use Pressidium\Limit_Login_Attempts\Sections\Fields\Elements\Element;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Field {
+class Field
+{
 
     /**
      * @var int Number of fields instantiated.
@@ -38,15 +40,16 @@ class Field {
     /**
      * Render the field.
      */
-    public function render() {
-        if ( ! empty( $this->description ) ) {
+    public function render()
+    {
+        if (! empty($this->description)) {
             printf(
                 '<p class="description">%s</p>',
-                esc_html( $this->description )
+                esc_html($this->description)
             );
         }
 
-        foreach ( $this->elements as $key => $element ) {
+        foreach ($this->elements as $key => $element) {
             $element->render();
         }
     }
@@ -59,7 +62,8 @@ class Field {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Field properties.
      */
-    public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
+    public function __construct($section_id, $page, $options_instance, $properties = array())
+    {
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
@@ -67,7 +71,7 @@ class Field {
             array(
                 'label'       => sprintf(
                     /* translators: %s is the unique s/n of the field. */
-                    __( 'Field #%s', 'prsdm-limit-login-attempts' ),
+                    __('Field #%s', 'prsdm-limit-login-attempts'),
                     self::$number_of_fields
                 ),
                 'id'          => 'field_' . self::$number_of_fields,
@@ -83,7 +87,7 @@ class Field {
         add_settings_field(
             $properties['id'],
             $properties['label'],
-            array( $this, 'render' ),
+            array($this, 'render'),
             $page,
             $section_id
         );
@@ -95,20 +99,21 @@ class Field {
      * @param string $element_type
      * @param array  $properties
      */
-    public function add_element( $element_type, $properties ) {
+    public function add_element($element_type, $properties)
+    {
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
-        if ( ! class_exists( $element_type ) ) {
+        if (! class_exists($element_type)) {
             return;
         }
 
-        $element = new $element_type( $this->section_id, $this->options, $properties );
+        $element = new $element_type($this->section_id, $this->options, $properties);
 
-        if ( ! ( $element instanceof Element ) ) {
+        if (! ($element instanceof Element)) {
             return;
         }
 
-        $this->elements[ $element->get_option_name() ] = $element;
+        $this->elements[$element->get_option_name()] = $element;
     }
 
     /**
@@ -116,8 +121,8 @@ class Field {
      *
      * @return Element[]
      */
-    public function get_elements() {
+    public function get_elements()
+    {
         return $this->elements;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Notifications;
 
 use Pressidium\Limit_Login_Attempts\Hooks\Actions;
@@ -7,11 +8,12 @@ use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
 use Pressidium\Limit_Login_Attempts\Options\Options;
 use Pressidium\Limit_Login_Attempts\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-abstract class Notification implements Actions {
+abstract class Notification implements Actions
+{
 
     /**
      * @var Options An instance of `Options`.
@@ -23,7 +25,8 @@ abstract class Notification implements Actions {
      *
      * @param Options $options
      */
-    public function __construct( $options ) {
+    public function __construct($options)
+    {
         $this->options = $options;
     }
 
@@ -32,9 +35,10 @@ abstract class Notification implements Actions {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions()
+    {
         return array(
-            Plugin::PREFIX . '_just_locked_out' => array( 'init', 10, 4 ),
+            Plugin::PREFIX . '_just_locked_out' => array('init', 10, 4),
         );
     }
 
@@ -55,15 +59,16 @@ abstract class Notification implements Actions {
      * 
      * @return bool Whether a notification was sent.
      */
-    abstract public function init( $username, $number_of_retries, $lockouts, $lockout_type );
+    abstract public function init($username, $number_of_retries, $lockouts, $lockout_type);
 
     /**
      * Whether the option is enabled.
      *
      * @return bool
      */
-    private function option_is_enabled() {
-        return $this->options->get( $this->get_option_name() );
+    private function option_is_enabled()
+    {
+        return $this->options->get($this->get_option_name());
     }
 
     /**
@@ -71,12 +76,12 @@ abstract class Notification implements Actions {
      *
      * @return bool
      */
-    protected function should_send() {
-        if ( ! $this->option_is_enabled() ) {
+    protected function should_send()
+    {
+        if (! $this->option_is_enabled()) {
             return false;
         }
 
         return true;
     }
-
 }

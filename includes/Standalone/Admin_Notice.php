@@ -1,11 +1,13 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Standalone;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Admin_Notice {
+class Admin_Notice
+{
 
     const SUCCESS = 'success';
     const INFO = 'info';
@@ -37,7 +39,8 @@ class Admin_Notice {
      * @param string $notice_type Notice type ('success', 'info', 'warning', or 'error').
      * @param string $pin_type    Pin type (either 'pinned' or 'dismissible').
      */
-    public function __construct( $message, $notice_type = 'success', $pin_type = 'dismissible' ) {
+    public function __construct($message, $notice_type = 'success', $pin_type = 'dismissible')
+    {
         $this->message     = $message;
         $this->notice_type = $notice_type;
         $this->pin_type    = $pin_type;
@@ -48,7 +51,8 @@ class Admin_Notice {
      *
      * @return bool
      */
-    private function is_dismissible() {
+    private function is_dismissible()
+    {
         return $this->pin_type === self::DISMISSIBLE;
     }
 
@@ -57,28 +61,29 @@ class Admin_Notice {
      *
      * @return string
      */
-    private function get_css_classes() {
+    private function get_css_classes()
+    {
         $css_classes = array(
             'notice',
-            sprintf( 'notice-%s', $this->notice_type )
+            sprintf('notice-%s', $this->notice_type)
         );
 
-        if ( $this->is_dismissible() ) {
+        if ($this->is_dismissible()) {
             $css_classes[] = 'is-dismissible';
         }
 
-        return implode( ' ', array_unique( $css_classes ) );
+        return implode(' ', array_unique($css_classes));
     }
 
     /**
      * Render this notice.
      */
-    public function render() {
+    public function render()
+    {
         printf(
             '<div class="%s"><p>%s</p></div>',
-            esc_attr( $this->get_css_classes() ),
+            esc_attr($this->get_css_classes()),
             $this->message
         );
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Pressidium\Limit_Login_Attempts\Login;
 
 use Pressidium\Limit_Login_Attempts\Hooks\Actions;
@@ -13,11 +14,12 @@ use Pressidium\Limit_Login_Attempts\Utils;
 use WP_Error;
 use WP_User;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-class Login_Error implements Actions, Filters {
+class Login_Error implements Actions, Filters
+{
 
     const ERROR_CODE = 'too_many_retries';
 
@@ -58,7 +60,8 @@ class Login_Error implements Actions, Filters {
      * @param Retries  $retries
      * @param Lockouts $lockouts
      */
-    public function __construct( $options, $retries, $lockouts ) {
+    public function __construct($options, $retries, $lockouts)
+    {
         $this->options  = $options;
         $this->retries  = $retries;
         $this->lockouts = $lockouts;
@@ -69,9 +72,10 @@ class Login_Error implements Actions, Filters {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions()
+    {
         return array(
-            'login_head' => array( 'add_errors' ),
+            'login_head' => array('add_errors'),
         );
     }
 
@@ -80,11 +84,12 @@ class Login_Error implements Actions, Filters {
      *
      * @return array
      */
-    public function get_filters() {
+    public function get_filters()
+    {
         return array(
-            'authenticate'      => array( 'track_credentials', 10, 3 ),
-            'shake_error_codes' => array( 'add_error_code' ),
-            'login_errors'      => array( 'format_error_messages' ),
+            'authenticate'      => array('track_credentials', 10, 3),
+            'shake_error_codes' => array('add_error_code'),
+            'login_errors'      => array('format_error_messages'),
         );
     }
 
@@ -95,7 +100,8 @@ class Login_Error implements Actions, Filters {
      *
      * @return array
      */
-    public function add_error_code( $error_codes ) {
+    public function add_error_code($error_codes)
+    {
         $error_codes[] = self::ERROR_CODE;
         return $error_codes;
     }
@@ -105,13 +111,14 @@ class Login_Error implements Actions, Filters {
      *
      * @return bool
      */
-    private function should_display_errors_on_this_page() {
-        if ( isset( $_GET['key'] ) ) {
+    private function should_display_errors_on_this_page()
+    {
+        if (isset($_GET['key'])) {
             // Reset password
             return false;
         }
 
-        if ( ! isset( $_REQUEST['action'] ) ) {
+        if (! isset($_REQUEST['action'])) {
             return true;
         }
 
@@ -124,7 +131,7 @@ class Login_Error implements Actions, Filters {
             'register'
         );
 
-        return ! in_array( $_REQUEST['action'], $ignore_actions );
+        return ! in_array($_REQUEST['action'], $ignore_actions);
     }
 
     /**
@@ -132,8 +139,9 @@ class Login_Error implements Actions, Filters {
      *
      * @return bool
      */
-    private function should_display_errors() {
-        if ( IP_Address::is_whitelisted() ) {
+    private function should_display_errors()
+    {
+        if (IP_Address::is_whitelisted()) {
             return false;
         }
 
@@ -143,26 +151,27 @@ class Login_Error implements Actions, Filters {
     /**
      * Build an informative error message about the current lockout.
      */
-    private function build_lockout_error_message() {
+    private function build_lockout_error_message()
+    {
         $message = sprintf(
             '<strong>%s</strong>: %s',
-            __( 'ERROR', 'prsdm-limit-login-attempts' ),
-            __( 'Too many failed login attempts.', 'prsdm-limit-login-attempts' )
+            __('ERROR', 'prsdm-limit-login-attempts'),
+            __('Too many failed login attempts.', 'prsdm-limit-login-attempts')
         ) . ' ';
 
         $timestamp = $this->lockouts->get_timestamp();
 
-        if ( is_null( $timestamp ) ) {
-            $message .= __( 'Please try again later.', 'prsdm-limit-login-attempts' );
+        if (is_null($timestamp)) {
+            $message .= __('Please try again later.', 'prsdm-limit-login-attempts');
             return $message;
         }
 
         $duration           = $timestamp - time();
-        $duration_formatted = Utils::format_duration( $duration );
+        $duration_formatted = Utils::format_duration($duration);
 
         $message .= sprintf(
             /* translators: %s is the duration until the lockout expires. */
-            __( 'Please try again in %s', 'prsdm-limit-login-attempts' ),
+            __('Please try again in %s', 'prsdm-limit-login-attempts'),
             $duration_formatted
         );
 
@@ -174,12 +183,13 @@ class Login_Error implements Actions, Filters {
      *
      * @return int
      */
-    private function calculate_remaining_retries() {
+    private function calculate_remaining_retries()
+    {
         $retries           = $this->retries->get_number_of_retries();
-        $allowed_retries   = $this->options->get( 'allowed_retries' );
-        $retries_remaining = $allowed_retries - ( $retries % $allowed_retries );
+        $allowed_retries   = $this->options->get('allowed_retries');
+        $retries_remaining = $allowed_retries - ($retries % $allowed_retries);
 
-        return max( $retries_remaining, 0 );
+        return max($retries_remaining, 0);
     }
 
     /**
@@ -187,8 +197,9 @@ class Login_Error implements Actions, Filters {
      *
      * @return string
      */
-    private function build_retry_error_message() {
-        if ( $this->retries->get_number_of_retries() === 0 ) {
+    private function build_retry_error_message()
+    {
+        if ($this->retries->get_number_of_retries() === 0) {
             // No retries at all
             return '';
         }
@@ -203,7 +214,7 @@ class Login_Error implements Actions, Filters {
                 $retries_remaining,
                 'prsdm-limit-login-attempts'
             ),
-            sprintf( '<strong>%d</strong>', $retries_remaining )
+            sprintf('<strong>%d</strong>', $retries_remaining)
         );
     }
 
@@ -212,15 +223,16 @@ class Login_Error implements Actions, Filters {
      *
      * @return string
      */
-    public function get_error_message() {
-        if ( ! $this->should_display_errors() ) {
+    public function get_error_message()
+    {
+        if (! $this->should_display_errors()) {
             return '';
         }
 
-        if ( $this->lockouts->is_currently_locked_out() ) {
+        if ($this->lockouts->is_currently_locked_out()) {
             return $this->build_lockout_error_message();
         }
-        
+
         return $this->build_retry_error_message();
     }
 
@@ -233,8 +245,9 @@ class Login_Error implements Actions, Filters {
      *
      * @return null|WP_User|WP_Error
      */
-    public function track_credentials( $user, $username, $password ) {
-        $this->non_empty_credentials = ! empty( $username ) && ! empty( $password );
+    public function track_credentials($user, $username, $password)
+    {
+        $this->non_empty_credentials = ! empty($username) && ! empty($password);
         return $user;
     }
 
@@ -245,10 +258,11 @@ class Login_Error implements Actions, Filters {
      *
      * @return array
      */
-    private function get_errors_as_array( $error_messages ) {
-        $errors = explode( "<br />\n", $error_messages );
-        $errors = array_map( 'trim', $errors );
-        return Utils::remove_last_item_if_empty( $errors );
+    private function get_errors_as_array($error_messages)
+    {
+        $errors = explode("<br />\n", $error_messages);
+        $errors = array_map('trim', $errors);
+        return Utils::remove_last_item_if_empty($errors);
     }
 
     /**
@@ -256,10 +270,11 @@ class Login_Error implements Actions, Filters {
      *
      * @return string
      */
-    private function get_errors_with_linebreaks() {
+    private function get_errors_with_linebreaks()
+    {
         $linebreak        = "<br />\n";
         $double_linebreak = $linebreak . $linebreak;
-        return implode( $double_linebreak, $this->errors ) . $linebreak;
+        return implode($double_linebreak, $this->errors) . $linebreak;
     }
 
     /**
@@ -267,9 +282,10 @@ class Login_Error implements Actions, Filters {
      *
      * @return bool
      */
-    private function there_are_wp_errors() {
+    private function there_are_wp_errors()
+    {
         $number_of_our_errors = $this->error_added ? 1 : 0;
-        return count( $this->errors ) > $number_of_our_errors;
+        return count($this->errors) > $number_of_our_errors;
     }
 
     /**
@@ -280,20 +296,21 @@ class Login_Error implements Actions, Filters {
      * user account names. Replace those error messages (if any)
      * with a more generic 'Incorrect username or password'.
      */
-    private function maybe_replace_wp_errors() {
-        if ( ! $this->there_are_wp_errors() ) {
+    private function maybe_replace_wp_errors()
+    {
+        if (! $this->there_are_wp_errors()) {
             return;
         }
 
         $this->errors = array();
-        
+
         $this->errors[] = sprintf(
             '<strong>%s</strong>: %s',
-            __( 'ERROR', 'prsdm-limit-login-attempts' ),
-            __( 'Incorrect username or password.', 'prsdm-limit-login-attempts' )
+            __('ERROR', 'prsdm-limit-login-attempts'),
+            __('Incorrect username or password.', 'prsdm-limit-login-attempts')
         );
 
-        if ( $this->error_added ) {
+        if ($this->error_added) {
             $this->errors[] = $this->get_error_message();
         }
     }
@@ -303,7 +320,8 @@ class Login_Error implements Actions, Filters {
      *
      * @return bool
      */
-    private function already_locked_out() {
+    private function already_locked_out()
+    {
         return $this->lockouts->is_currently_locked_out() && ! Lockouts::$just_locked_out;
     }
 
@@ -313,20 +331,21 @@ class Login_Error implements Actions, Filters {
      * @param string $error_messages
      * @return string
      */
-    public function format_error_messages( $error_messages ) {
-        if ( ! $this->should_display_errors() ) {
+    public function format_error_messages($error_messages)
+    {
+        if (! $this->should_display_errors()) {
             return $error_messages;
         }
-        
-        if ( $this->already_locked_out() ) {
+
+        if ($this->already_locked_out()) {
             return $this->get_error_message();
         }
 
-        if ( ! $this->non_empty_credentials ) {
+        if (! $this->non_empty_credentials) {
             return $error_messages;
         }
 
-        $this->errors = $this->get_errors_as_array( $error_messages );
+        $this->errors = $this->get_errors_as_array($error_messages);
         $this->maybe_replace_wp_errors();
 
         return $this->get_errors_with_linebreaks();
@@ -335,10 +354,11 @@ class Login_Error implements Actions, Filters {
     /**
      * Add errors to be displayed on the login page.
      */
-    public function add_errors() {
+    public function add_errors()
+    {
         global $error;
 
-        if ( ! $this->should_display_errors() || $this->error_added ) {
+        if (! $this->should_display_errors() || $this->error_added) {
             return;
         }
 
@@ -346,5 +366,4 @@ class Login_Error implements Actions, Filters {
 
         $this->error_added = true;
     }
-
 }
