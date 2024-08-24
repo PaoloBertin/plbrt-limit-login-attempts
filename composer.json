@@ -1,0 +1,23 @@
+{
+    "name": "prsdm/limit-login-attempts",
+    "description": "gestiste  i tentativi di login ad un sito",
+    "type": "library",
+    "require": {
+        "monolog/monolog": "3.7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "11.3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prsdm\\LimitLoginAttempts\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "paolo.bertin",
+            "email": "paolo.bertin.62@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
