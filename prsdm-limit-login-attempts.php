@@ -50,6 +50,8 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+define('PLUGIN_NAME', 'prsdm-limit-login-attempts');
+
 class Plugin
 {
     const PREFIX = 'prsdm_limit_login_attempts';

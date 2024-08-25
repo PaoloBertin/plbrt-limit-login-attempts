@@ -8,7 +8,6 @@ if (! defined('ABSPATH')) {
 
 class IP_Address
 {
-
     const DIRECT = 'direct';
     const REVERSE_PROXY = 'reverse_proxy';
 

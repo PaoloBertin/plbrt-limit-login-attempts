@@ -12,7 +12,7 @@ final class Log
 {
     /** @var string  */
     // private const OUTPUT_STREAM = __DIR__ . '/logs/plugin.log';
-    private const OUTPUT_STREAM = WP_PLUGIN_DIR . '/logs/plugin.log';
+    private const OUTPUT_STREAM = WP_PLUGIN_DIR . '/' . PLUGIN_NAME . '/logs/plugin.log';
 
     /**
      * @var LoggerInterface
@@ -23,10 +23,9 @@ final class Log
     {
         if (!self::$instance) {
             $plugin_dir = WP_PLUGIN_DIR . '/prsdm-limit-login-attempts' . '/';
-            // $dotenv = Dotenv::createImmutable(__DIR__);
             $dotenv = Dotenv::createImmutable($plugin_dir);
             $dotenv->load();
-            $dotenv->required(['LOGGING_LEVEL', ])->notEmpty();
+            $dotenv->required(['LOGGING_LEVEL',])->notEmpty();
             self::configureInstance();
         }
         return self::$instance;
@@ -35,10 +34,8 @@ final class Log
     protected static function configureInstance(): LoggerInterface
     {
         $logger = new Logger('log');
-        $logger->pushHandler(new StreamHandler(self::OUTPUT_STREAM, self::getLoggingLevel()));
-        // $logger->pushHandler(new StreamHandler(__DIR__ . '/logs/plugin.log', self::getLoggingLevel()));
-        // $this->logger->pushHandler(new StreamHandler(__DIR__ . '/logs/plugin.log', Logger::DEBUG));
-
+        $stream = self::OUTPUT_STREAM;
+        $logger->pushHandler(new StreamHandler($stream, self::getLoggingLevel()));
 
         self::$instance = $logger;
         return self::$instance;
@@ -46,7 +43,6 @@ final class Log
 
     public static function getLoggingLevel()
     {
-        // $loggin_level = getenv('LOGGING_LEVEL');
         $loggin_level = $_ENV['LOGGING_LEVEL'];
         if ($loggin_level === 'debug') {
             //            return Logger::DEBUG;
@@ -57,7 +53,7 @@ final class Log
 
     public static function debug(string $message, array $context = []): void
     {
-        self::getLogger()->debug($message, $context);
+         self::getLogger()->debug($message, $context);
     }
 
     public static function info(string $message, array $context = []): void
