@@ -32,8 +32,9 @@
 
 namespace Pressidium\Limit_Login_Attempts;
 
-use Pressidium\Limit_Login_Attempts\Options\Options;
+use Pressidium\Limit_Login_Attempts\Logging\Log;
 
+use Pressidium\Limit_Login_Attempts\Options\Options;
 use Pressidium\Limit_Login_Attempts\Options\WP_Options;
 use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
 use Pressidium\Limit_Login_Attempts\Pages\Settings_Page;
@@ -51,7 +52,6 @@ if (! defined('ABSPATH')) {
 
 class Plugin
 {
-
     const PREFIX = 'prsdm_limit_login_attempts';
 
     /**
@@ -73,6 +73,7 @@ class Plugin
         $this->setup_constants();
 
         add_action('plugins_loaded', array($this, 'init'));
+        Log::debug('plugins_loaded');
     }
 
     /**
@@ -107,6 +108,8 @@ class Plugin
     public function init()
     {
         $this->options = new WP_Options();
+        Log::debug('definite le opzioni');
+
         $this->hooks_manager = new Hooks_Manager();
 
         IP_Address::init($this->options->get('site_connection'));
