@@ -76,7 +76,7 @@ class Plugin
         $this->setup_constants();
 
         add_action('plugins_loaded', array($this, 'init'));
-        Log::debug('plugins_loaded');
+        Log::debug(PLUGIN_NAME . ' initialized');
     }
 
     /**
