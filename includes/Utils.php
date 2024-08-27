@@ -85,9 +85,9 @@ class Utils
         $seconds = $seconds - self::minutes_to_seconds($minutes);
 
         $duration = array(
-            _n('hour', 'hours', $hours, 'prsdm-limit-login-attempts')       => $hours,
-            _n('minute', 'minutes', $minutes, 'prsdm-limit-login-attempts') => $minutes,
-            _n('second', 'seconds', $seconds, 'prsdm-limit-login-attempts') => $seconds
+            _n('hour', 'hours', $hours, 'plbrt-limit-login-attempts')       => $hours,
+            _n('minute', 'minutes', $minutes, 'plbrt-limit-login-attempts') => $minutes,
+            _n('second', 'seconds', $seconds, 'plbrt-limit-login-attempts') => $seconds
         );
 
         $formatted_duration = array();

@@ -22,7 +22,7 @@ final class Log
     public static function getLogger(): LoggerInterface
     {
         if (!self::$instance) {
-            $plugin_dir = WP_PLUGIN_DIR . '/prsdm-limit-login-attempts' . '/';
+            $plugin_dir = WP_PLUGIN_DIR . '/plbrt-limit-login-attempts' . '/';
             $dotenv = Dotenv::createImmutable($plugin_dir);
             $dotenv->load();
             $dotenv->required(['LOGGING_LEVEL',])->notEmpty();

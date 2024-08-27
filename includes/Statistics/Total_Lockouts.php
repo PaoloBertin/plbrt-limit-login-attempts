@@ -29,7 +29,7 @@ class Total_Lockouts extends Statistic
     protected function get_button()
     {
         return new Button(
-            __('Reset Total Lockouts', 'prsdm-limit-login-attempts'),
+            __('Reset Total Lockouts', 'plbrt-limit-login-attempts'),
             'reset_total_lockouts',
             array($this, 'reset_total_lockouts')
         );
@@ -50,7 +50,7 @@ class Total_Lockouts extends Statistic
                 '%d lockout since last reset',
                 '%d lockouts since last reset',
                 $value,
-                'prsdm-limit-login-attempts'
+                'plbrt-limit-login-attempts'
             ),
             $value
         );

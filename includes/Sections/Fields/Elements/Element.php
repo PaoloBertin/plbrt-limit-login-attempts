@@ -70,7 +70,7 @@ abstract class Element implements UI
                 array(
                     'label'     => sprintf(
                         /* translators: %s is the unique s/n of the element. */
-                        __('Element #%s', 'prsdm-limit-login-attempts'),
+                        __('Element #%s', 'plbrt-limit-login-attempts'),
                         self::$number_of_elements
                     ),
                     'name'      => 'element_' . self::$number_of_elements,

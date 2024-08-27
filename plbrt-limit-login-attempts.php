@@ -1,15 +1,18 @@
 <?php
 
 /**
- * Plugin Name: PRSDM Limit Login Attempts
- * Plugin URI: https://pressidium.com
+ * Plugin Name: PLBRT Limit Login Attempts
+ * Plugin URI:  
  * Description: Limit rate of login attempts, including by way of cookies, for each IP.
- * Author: Pressidium
- * Author URI: https://pressidium.com
- * Text Domain: prsdm-limit-login-attempts
- * License: GPL-2.0+
- * Version: 1.0.0
+ * Author:      Paolo Bertin
+ * Author URI:  
+ * Text Domain: plbrt-limit-login-attempts
+ * License:     GPL-2.0+
+ * Version:     1.0.0
  *
+ * An object-oriented WordPress plugin based on prsdm-limit-login-attempts
+ * by Pressidium
+ * 
  * Based on Limit Login Attempts (http://devel.kostdoktorn.se/limit-login-attempts)
  * by Johan Eenfeldt (http://devel.kostdoktorn.se)
  *
@@ -50,11 +53,11 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('PLUGIN_NAME', 'prsdm-limit-login-attempts');
+define('PLUGIN_NAME', 'plbrt-limit-login-attempts');
 
 class Plugin
 {
-    const PREFIX = 'prsdm_limit_login_attempts';
+    const PREFIX = 'plbrt_limit_login_attempts';
 
     /**
      * @var Options An instance of the `Options` class.

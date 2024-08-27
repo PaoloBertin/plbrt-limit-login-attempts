@@ -71,7 +71,7 @@ class Field
             array(
                 'label'       => sprintf(
                     /* translators: %s is the unique s/n of the field. */
-                    __('Field #%s', 'prsdm-limit-login-attempts'),
+                    __('Field #%s', 'plbrt-limit-login-attempts'),
                     self::$number_of_fields
                 ),
                 'id'          => 'field_' . self::$number_of_fields,

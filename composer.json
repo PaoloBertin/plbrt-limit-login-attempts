@@ -1,5 +1,5 @@
 {
-    "name": "prsdm/limit-login-attempts",
+    "name": "plbrt/limit-login-attempts",
     "description": "gestiste  i tentativi di login ad un sito",
     "type": "library",
     "require": {

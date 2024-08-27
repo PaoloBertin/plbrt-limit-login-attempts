@@ -29,7 +29,7 @@ class Active_Lockouts extends Statistic
     protected function get_button()
     {
         return new Button(
-            __('Remove Active Lockouts', 'prsdm-limit-login-attempts'),
+            __('Remove Active Lockouts', 'plbrt-limit-login-attempts'),
             'remove_active_lockouts',
             array($this, 'remove_active_lockouts')
         );
@@ -50,7 +50,7 @@ class Active_Lockouts extends Statistic
                 '%d IP is currently blocked from trying to log in',
                 '%d IPs are currently blocked from trying to log in',
                 $value,
-                'prsdm-limit-login-attempts'
+                'plbrt-limit-login-attempts'
             ),
             $value
         );

@@ -51,14 +51,14 @@ class Lockout_Logs implements UI, HTML
         if (empty($lockouts_logs)) {
             printf(
                 '<p>%s</p>',
-                __('There are no records.', 'prsdm-limit-login-attempts')
+                __('There are no records.', 'plbrt-limit-login-attempts')
             );
             return;
         }
 
         $table  = new Lockout_Logs_Table($this->options);
         $button = new Button(
-            __('Clear Log', 'prsdm-limit-login-attempts'),
+            __('Clear Log', 'plbrt-limit-login-attempts'),
             'clear_log',
             array($this, 'clear_logs')
         );
@@ -129,7 +129,7 @@ class Lockout_Logs implements UI, HTML
         if (! $removed) {
             /** @noinspection SpellCheckingInspection */
             throw new Exception(
-                __('Couldn\'t clear lockout logs', 'prsdm-limit-login-attempts')
+                __('Couldn\'t clear lockout logs', 'plbrt-limit-login-attempts')
             );
         }
     }

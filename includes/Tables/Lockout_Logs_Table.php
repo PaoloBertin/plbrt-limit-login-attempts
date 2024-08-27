@@ -60,9 +60,9 @@ class Lockout_Logs_Table extends Table
     protected function get_cols()
     {
         return array(
-            'ip_address' => __('IP address', 'prsdm-limit-login-attempts'),
-            'username'   => __('Tried to login as', 'prsdm-limit-login-attempts'),
-            'lockouts'   => __('Lockout(s)', 'prsdm-limit-login-attempts')
+            'ip_address' => __('IP address', 'plbrt-limit-login-attempts'),
+            'username'   => __('Tried to login as', 'plbrt-limit-login-attempts'),
+            'lockouts'   => __('Lockout(s)', 'plbrt-limit-login-attempts')
         );
     }
 

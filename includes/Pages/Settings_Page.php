@@ -76,7 +76,7 @@ class Settings_Page extends Admin_Page implements Actions
         $link_beginning = sprintf(
             '<a href="%s" title="%s">',
             esc_url($faq_link),
-            esc_attr(__('FAQ', 'prsdm-limit-login-attempts'))
+            esc_attr(__('FAQ', 'plbrt-limit-login-attempts'))
         );
 
         $link_end = '</a>';
@@ -84,10 +84,10 @@ class Settings_Page extends Admin_Page implements Actions
         /** @noinspection SpellCheckingInspection */
         $message = sprintf(
             '<strong>%s</strong> %s',
-            __('Current setting appears to be invalid.', 'prsdm-limit-login-attempts'),
+            __('Current setting appears to be invalid.', 'plbrt-limit-login-attempts'),
             /* translators: %s indicate the beginning and end of the link to the FAQ page */
             sprintf(
-                __('Please make sure it is correct. Further information can be found %shere%s', 'prsdm-limit-login-attempts'),
+                __('Please make sure it is correct. Further information can be found %shere%s', 'plbrt-limit-login-attempts'),
                 $link_beginning,
                 $link_end
             )
@@ -103,7 +103,7 @@ class Settings_Page extends Admin_Page implements Actions
      */
     protected function get_menu_title()
     {
-        return __('Limit Login Attempts', 'prsdm-limit-login-attempts');
+        return __('Limit Login Attempts', 'plbrt-limit-login-attempts');
     }
 
     /**
@@ -113,7 +113,7 @@ class Settings_Page extends Admin_Page implements Actions
      */
     protected function get_page_title()
     {
-        return __('Limit Login Attempts Settings', 'prsdm-limit-login-attempts');
+        return __('Limit Login Attempts Settings', 'plbrt-limit-login-attempts');
     }
 
     /**
@@ -150,7 +150,7 @@ class Settings_Page extends Admin_Page implements Actions
         if ($is_behind_proxy) {
             return sprintf(
                 /* translators: %1$s is the proxy IP address and %2$s is the IP address of the user. */
-                __('It appears the site is reached through a proxy server (proxy IP: %1$s, your IP: %2$s)', 'prsdm-limit-login-attempts'),
+                __('It appears the site is reached through a proxy server (proxy IP: %1$s, your IP: %2$s)', 'plbrt-limit-login-attempts'),
                 IP_Address::get_reverse_proxy(),
                 IP_Address::get_direct()
             );
@@ -158,7 +158,7 @@ class Settings_Page extends Admin_Page implements Actions
 
         return sprintf(
             /* translators: %s is the IP address of the user. */
-            __('It appears the site is reached directly (from your IP: %s)', 'prsdm-limit-login-attempts'),
+            __('It appears the site is reached directly (from your IP: %s)', 'plbrt-limit-login-attempts'),
             IP_Address::get_direct()
         );
     }
@@ -170,11 +170,11 @@ class Settings_Page extends Admin_Page implements Actions
     {
         $statistics_section = $this->register_presentation_section(
             'statistics',
-            array('title' => __('Statistics', 'prsdm-limit-login-attempts'))
+            array('title' => __('Statistics', 'plbrt-limit-login-attempts'))
         );
 
         $total_lockouts_field = $statistics_section->add_field(
-            array('label' => __('Total lockouts', 'prsdm-limit-login-attempts'))
+            array('label' => __('Total lockouts', 'plbrt-limit-login-attempts'))
         );
 
         $total_lockouts_field->add_element(
@@ -185,7 +185,7 @@ class Settings_Page extends Admin_Page implements Actions
         );
 
         $active_lockouts_field = $statistics_section->add_field(
-            array('label' => __('Active lockouts', 'prsdm-limit-login-attempts'))
+            array('label' => __('Active lockouts', 'plbrt-limit-login-attempts'))
         );
 
         $active_lockouts_field->add_element(
@@ -203,17 +203,17 @@ class Settings_Page extends Admin_Page implements Actions
     {
         $general_options_section = $this->register_section(
             'general_options',
-            array('title' => __('General Options', 'prsdm-limit-login-attempts'))
+            array('title' => __('General Options', 'plbrt-limit-login-attempts'))
         );
 
         $lockout_field = $general_options_section->add_field(
-            array('label' => __('Lockout', 'prsdm-limit-login-attempts'))
+            array('label' => __('Lockout', 'plbrt-limit-login-attempts'))
         );
 
         $lockout_field->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'    => __('Allow retries', 'prsdm-limit-login-attempts'),
+                'label'    => __('Allow retries', 'plbrt-limit-login-attempts'),
                 'name'     => 'allowed_retries',
                 'validate' => array(Utils::class, 'is_greater_than_zero')
             )
@@ -222,7 +222,7 @@ class Settings_Page extends Admin_Page implements Actions
         $lockout_field->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'     => __('Lockout time (in minutes)', 'prsdm-limit-login-attempts'),
+                'label'     => __('Lockout time (in minutes)', 'plbrt-limit-login-attempts'),
                 'name'      => 'normal_lockout_time',
                 'validate'  => array(Utils::class, 'is_greater_than_zero'),
                 'pre_write' => array(Utils::class, 'minutes_to_seconds'),
@@ -233,7 +233,7 @@ class Settings_Page extends Admin_Page implements Actions
         $lockout_field->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'    => __('Max lockouts', 'prsdm-limit-login-attempts'),
+                'label'    => __('Max lockouts', 'plbrt-limit-login-attempts'),
                 'name'     => 'max_lockouts',
                 'validate' => array(Utils::class, 'is_greater_than_zero')
             )
@@ -242,7 +242,7 @@ class Settings_Page extends Admin_Page implements Actions
         $lockout_field->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'     => __('Increased lockout time (in hours)', 'prsdm-limit-login-attempts'),
+                'label'     => __('Increased lockout time (in hours)', 'plbrt-limit-login-attempts'),
                 'name'      => 'long_lockout_time',
                 'validate'  => array(Utils::class, 'is_greater_than_zero'),
                 'pre_write' => array(Utils::class, 'hours_to_seconds'),
@@ -253,7 +253,7 @@ class Settings_Page extends Admin_Page implements Actions
         $lockout_field->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'     => __('Hours until retries are reset', 'prsdm-limit-login-attempts'),
+                'label'     => __('Hours until retries are reset', 'plbrt-limit-login-attempts'),
                 'name'      => 'hours_until_retries_reset',
                 'validate'  => array(Utils::class, 'is_greater_than_zero'),
                 'pre_write' => array(Utils::class, 'hours_to_seconds'),
@@ -263,7 +263,7 @@ class Settings_Page extends Admin_Page implements Actions
 
         $site_connection_field = $general_options_section->add_field(
             array(
-                'label'       => __('Site connection', 'prsdm-limit-login-attempts'),
+                'label'       => __('Site connection', 'plbrt-limit-login-attempts'),
                 'description' => $this->get_site_connection_description()
             )
         );
@@ -271,17 +271,17 @@ class Settings_Page extends Admin_Page implements Actions
         $site_connection_field->add_element(
             Element::RADIO_ELEMENT,
             array(
-                'label' => __('Site connection', 'prsdm-limit-login-attempts'),
+                'label' => __('Site connection', 'plbrt-limit-login-attempts'),
                 'name'  => 'site_connection',
                 'values'  => array(
-                    'direct'        => __('Direct connection', 'prsdm-limit-login-attempts'),
-                    'reverse_proxy' => __('From behind a reverse proxy', 'prsdm-limit-login-attempts')
+                    'direct'        => __('Direct connection', 'plbrt-limit-login-attempts'),
+                    'reverse_proxy' => __('From behind a reverse proxy', 'plbrt-limit-login-attempts')
                 )
             )
         );
 
         $handle_cookie_login_field = $general_options_section->add_field(
-            array('label' => __('Handle cookie login', 'prsdm-limit-login-attempts'))
+            array('label' => __('Handle cookie login', 'plbrt-limit-login-attempts'))
         );
 
         $handle_cookie_login_field->add_element(
@@ -289,20 +289,20 @@ class Settings_Page extends Admin_Page implements Actions
             array(
                 'name'   => 'handle_cookie_login',
                 'values' => array(
-                    'yes' => __('Yes', 'prsdm-limit-login-attempts'),
-                    'no'  => __('No', 'prsdm-limit-login-attempts')
+                    'yes' => __('Yes', 'plbrt-limit-login-attempts'),
+                    'no'  => __('No', 'plbrt-limit-login-attempts')
                 )
             )
         );
 
         $notify_on_lockout = $general_options_section->add_field(
-            array('label'  => __('Notify on lockout', 'prsdm-limit-login-attempts'))
+            array('label'  => __('Notify on lockout', 'plbrt-limit-login-attempts'))
         );
 
         $notify_on_lockout->add_element(
             Element::CHECKBOX_ELEMENT,
             array(
-                'label' => __('Log IP', 'prsdm-limit-login-attempts'),
+                'label' => __('Log IP', 'plbrt-limit-login-attempts'),
                 'name'  => 'notify_on_lockout_log_ip'
             )
         );
@@ -310,7 +310,7 @@ class Settings_Page extends Admin_Page implements Actions
         $notify_on_lockout->add_element(
             Element::CHECKBOX_ELEMENT,
             array(
-                'label' => __('Email to admin', 'prsdm-limit-login-attempts'),
+                'label' => __('Email to admin', 'plbrt-limit-login-attempts'),
                 'name'  => 'notify_on_lockout_email_to_admin'
             )
         );
@@ -318,7 +318,7 @@ class Settings_Page extends Admin_Page implements Actions
         $notify_on_lockout->add_element(
             Element::NUMBER_ELEMENT,
             array(
-                'label'    => __('After lockouts', 'prsdm-limit-login-attempts'),
+                'label'    => __('After lockouts', 'plbrt-limit-login-attempts'),
                 'name'     => 'notify_after_lockouts',
                 'validate' => array(Utils::class, 'is_greater_than_zero')
             )
@@ -333,12 +333,12 @@ class Settings_Page extends Admin_Page implements Actions
         $lockout_log_section = $this->register_presentation_section(
             'lockout_log',
             array(
-                'title' => __('Lockout log', 'prsdm-limit-login-attempts')
+                'title' => __('Lockout log', 'plbrt-limit-login-attempts')
             )
         );
 
         $log_field = $lockout_log_section->add_field(
-            array('label' => __('Log', 'prsdm-limit-login-attempts'))
+            array('label' => __('Log', 'plbrt-limit-login-attempts'))
         );
 
         $log_field->add_element(

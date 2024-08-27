@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'prsdm/limit-login-attempts',
+        'name' => 'plbrt/limit-login-attempts',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
         'reference' => '9e675e7485e55ea9e8b03bd558f1e9bafb6ae8ea',
@@ -127,7 +127,7 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'prsdm/limit-login-attempts' => array(
+        'plbrt/limit-login-attempts' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
             'reference' => '9e675e7485e55ea9e8b03bd558f1e9bafb6ae8ea',

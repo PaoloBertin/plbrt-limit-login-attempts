@@ -71,7 +71,7 @@ class Email_Notification extends Notification
         $blog_name = get_bloginfo();
 
         $message = sprintf(
-            __('%d failed login attempts (%d lockout(s)) from IP: %s', 'prsdm-limit-login-attempts'),
+            __('%d failed login attempts (%d lockout(s)) from IP: %s', 'plbrt-limit-login-attempts'),
             $this->number_of_retries,
             $this->number_of_lockouts,
             IP_Address::get_address()
@@ -79,26 +79,26 @@ class Email_Notification extends Notification
 
         if (! empty($this->username)) {
             $message .= sprintf(
-                __('Last user attempted: %s', 'prsdm-limit-login-attempts'),
+                __('Last user attempted: %s', 'plbrt-limit-login-attempts'),
                 $this->username
             ) . "\r\n\r\n";
         }
 
         if (IP_Address::is_whitelisted()) {
             $subject = sprintf(
-                __('[%s] Failed login attempts from whitelisted IP', 'prsdm-limit-login-attempts'),
+                __('[%s] Failed login attempts from whitelisted IP', 'plbrt-limit-login-attempts'),
                 $blog_name
             );
 
-            $message .= __('IP was NOT blocked because of external whitelist', 'prsdm-limit-login-attempts');
+            $message .= __('IP was NOT blocked because of external whitelist', 'plbrt-limit-login-attempts');
         } else {
             $subject = sprintf(
-                __('[%s] Too many failed login attempts', 'prsdm-limit-login-attempts'),
+                __('[%s] Too many failed login attempts', 'plbrt-limit-login-attempts'),
                 $blog_name
             );
 
             $message .= sprintf(
-                __('IP was blocked for %s', 'prsdm-limit-login-attempts'),
+                __('IP was blocked for %s', 'plbrt-limit-login-attempts'),
                 $duration_formatted
             );
         }

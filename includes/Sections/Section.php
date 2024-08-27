@@ -55,7 +55,7 @@ class Section
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __('Section', 'prsdm-limit-login-attempts'),
+                'title'       => __('Section', 'plbrt-limit-login-attempts'),
                 'description' => ''
             )
         );

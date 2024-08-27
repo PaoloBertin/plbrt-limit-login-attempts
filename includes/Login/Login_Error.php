@@ -155,14 +155,14 @@ class Login_Error implements Actions, Filters
     {
         $message = sprintf(
             '<strong>%s</strong>: %s',
-            __('ERROR', 'prsdm-limit-login-attempts'),
-            __('Too many failed login attempts.', 'prsdm-limit-login-attempts')
+            __('ERROR', 'plbrt-limit-login-attempts'),
+            __('Too many failed login attempts.', 'plbrt-limit-login-attempts')
         ) . ' ';
 
         $timestamp = $this->lockouts->get_timestamp();
 
         if (is_null($timestamp)) {
-            $message .= __('Please try again later.', 'prsdm-limit-login-attempts');
+            $message .= __('Please try again later.', 'plbrt-limit-login-attempts');
             return $message;
         }
 
@@ -171,7 +171,7 @@ class Login_Error implements Actions, Filters
 
         $message .= sprintf(
             /* translators: %s is the duration until the lockout expires. */
-            __('Please try again in %s', 'prsdm-limit-login-attempts'),
+            __('Please try again in %s', 'plbrt-limit-login-attempts'),
             $duration_formatted
         );
 
@@ -212,7 +212,7 @@ class Login_Error implements Actions, Filters
                 '%s attempt remaining',
                 '%s attempts remaining',
                 $retries_remaining,
-                'prsdm-limit-login-attempts'
+                'plbrt-limit-login-attempts'
             ),
             sprintf('<strong>%d</strong>', $retries_remaining)
         );
@@ -306,8 +306,8 @@ class Login_Error implements Actions, Filters
 
         $this->errors[] = sprintf(
             '<strong>%s</strong>: %s',
-            __('ERROR', 'prsdm-limit-login-attempts'),
-            __('Incorrect username or password.', 'prsdm-limit-login-attempts')
+            __('ERROR', 'plbrt-limit-login-attempts'),
+            __('Incorrect username or password.', 'plbrt-limit-login-attempts')
         );
 
         if ($this->error_added) {

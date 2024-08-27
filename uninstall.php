@@ -11,6 +11,6 @@ if (! defined('ABSPATH')) {
 require_once __DIR__ . '/includes/Options/WP_Options.php';
 
 foreach (WP_Options::get_option_keys() as $option_key) {
-    $db_option_name = 'prsdm_limit_login_attempts_' . $option_key;
+    $db_option_name = 'plbrt_limit_login_attempts_' . $option_key;
     delete_option($db_option_name);
 }

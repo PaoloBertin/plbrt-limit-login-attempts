@@ -68,7 +68,7 @@ abstract class Admin_Page implements Actions
                 <?php
                 settings_fields($this->get_slug());
                 do_settings_sections($this->get_slug());
-                submit_button(__('Change Options', 'prsdm-limit-login-attempts'));
+                submit_button(__('Change Options', 'plbrt-limit-login-attempts'));
                 ?>
             </form>
         </div>
@@ -98,13 +98,13 @@ abstract class Admin_Page implements Actions
         if (isset($_GET['action_result'])) {
             if ($_GET['action_result'] === 'success') {
                 $this->render_admin_notice(
-                    esc_html(__('Action was performed successfully.', 'prsdm-limit-login-attempts')),
+                    esc_html(__('Action was performed successfully.', 'plbrt-limit-login-attempts')),
                     Admin_Notice::SUCCESS
                 );
             } else {
                 /** @noinspection SpellCheckingInspection */
                 $this->render_admin_notice(
-                    esc_html(__('An error occurred. Couldn\'t perform action.', 'prsdm-limit-login-attempts')),
+                    esc_html(__('An error occurred. Couldn\'t perform action.', 'plbrt-limit-login-attempts')),
                     Admin_Notice::ERROR
                 );
             }

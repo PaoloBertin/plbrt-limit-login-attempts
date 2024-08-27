@@ -86,7 +86,7 @@ abstract class Statistic implements UI, HTML
     public function render()
     {
         if ($this->value === 0) {
-            _e('There are no records.', 'prsdm-limit-login-attempts');
+            _e('There are no records.', 'plbrt-limit-login-attempts');
             return;
         }
 

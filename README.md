@@ -17,5 +17,5 @@ GitHub repo accompanying our “WordPress and Object-Oriented Programming” art
 
 ## Setup
 
-1. Upload the entire `prsdm-limit-login-attempts` folder to the `wp-content/plugins/` directory
+1. Upload the entire `plbrt-limit-login-attempts` folder to the `wp-content/plugins/` directory
 2. Activate the plugin through the “Plugins” menu in WordPress
