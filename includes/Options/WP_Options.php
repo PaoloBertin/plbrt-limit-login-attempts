@@ -2,6 +2,7 @@
 
 namespace plbrt\limit_login_attempts\Options;
 
+use plbrt\limit_login_attempts\Logging\Log;
 use plbrt\limit_login_attempts\Plugin;
 
 if (! defined('ABSPATH')) {

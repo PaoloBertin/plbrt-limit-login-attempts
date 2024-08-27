@@ -11,6 +11,8 @@ if (! defined('ABSPATH')) {
 
 class Hooks_Manager
 {
+    public function __construct(){
+    }
 
     /**
      * Register an object.

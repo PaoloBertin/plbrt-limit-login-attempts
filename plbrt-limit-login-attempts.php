@@ -116,10 +116,12 @@ class Plugin
      */
     public function init()
     {
+        // recupera le opzioni
         $this->options = new WP_Options();
-        Log::debug('definite le opzioni');
+        Log::debug('recuperate le opzioni');
 
         $this->hooks_manager = new Hooks_Manager();
+        Log::debug('creato oggetto Hook_Manager');
 
         IP_Address::init($this->options->get('site_connection'));
 
