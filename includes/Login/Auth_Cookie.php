@@ -1,9 +1,9 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Login;
+namespace plbrt\limit_login_attempts\Login;
 
-use Pressidium\Limit_Login_Attempts\User_Meta;
-use Pressidium\Limit_Login_Attempts\Plugin;
+use plbrt\limit_login_attempts\User_Meta;
+use plbrt\limit_login_attempts\Plugin;
 
 use WP_User;
 

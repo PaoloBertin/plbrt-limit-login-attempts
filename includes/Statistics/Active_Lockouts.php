@@ -1,8 +1,8 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Statistics;
+namespace plbrt\limit_login_attempts\Statistics;
 
-use Pressidium\Limit_Login_Attempts\Standalone\Button;
+use plbrt\limit_login_attempts\Standalone\Button;
 
 if (! defined('ABSPATH')) {
     exit;

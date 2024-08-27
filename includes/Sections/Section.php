@@ -1,9 +1,9 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Sections;
+namespace plbrt\limit_login_attempts\Sections;
 
-use Pressidium\Limit_Login_Attempts\Options\Options;
-use Pressidium\Limit_Login_Attempts\Sections\Fields\Field;
+use plbrt\limit_login_attempts\Options\Options;
+use plbrt\limit_login_attempts\Sections\Fields\Field;
 
 if (! defined('ABSPATH')) {
     exit;

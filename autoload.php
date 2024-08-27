@@ -1,6 +1,6 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts;
+namespace plbrt\limit_login_attempts;
 
 if (! defined('ABSPATH')) {
     exit;
@@ -13,10 +13,10 @@ if (! defined('ABSPATH')) {
  *
  * After registering this autoloader, the following
  * line would cause the function to attempt to load
- * the `\Pressidium\Limit_Login_Attempts\Standalone\Button`
+ * the `\plbrt\limit_login_attempts\Standalone\Button`
  * class from the `./includes/Standalone/Button.php` file:
  * 
- * new \Pressidium\Limit_Login_Attempts\Standalone\Button;
+ * new \plbrt\limit_login_attempts\Standalone\Button;
  */
 class Autoloader
 {
@@ -24,7 +24,7 @@ class Autoloader
     /**
      * @var string Project-specific namespace prefix.
      */
-    const PREFIX = 'Pressidium\\Limit_Login_Attempts\\';
+    const PREFIX = 'plbrt\\limit_login_attempts\\';
 
     /**
      * @var string Base directory for the namespace prefix.

@@ -1,17 +1,17 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Pages;
+namespace plbrt\limit_login_attempts\Pages;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Actions;
+use plbrt\limit_login_attempts\Hooks\Actions;
 
-use Pressidium\Limit_Login_Attempts\Standalone\Admin_Notice;
-use Pressidium\Limit_Login_Attempts\Sections\Settings_Section;
-use Pressidium\Limit_Login_Attempts\Sections\Section;
-use Pressidium\Limit_Login_Attempts\Options\Options;
-use Pressidium\Limit_Login_Attempts\Plugin;
+use plbrt\limit_login_attempts\Standalone\Admin_Notice;
+use plbrt\limit_login_attempts\Sections\Settings_Section;
+use plbrt\limit_login_attempts\Sections\Section;
+use plbrt\limit_login_attempts\Options\Options;
+use plbrt\limit_login_attempts\Plugin;
 
-use const Pressidium\Limit_Login_Attempts\PLUGIN_URL;
-use const Pressidium\Limit_Login_Attempts\VERSION;
+use const plbrt\limit_login_attempts\PLUGIN_URL;
+use const plbrt\limit_login_attempts\VERSION;
 
 if (! defined('ABSPATH')) {
     exit;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Standalone;
+namespace plbrt\limit_login_attempts\Standalone;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Actions;
-use Pressidium\Limit_Login_Attempts\Interfaces\UI;
+use plbrt\limit_login_attempts\Hooks\Actions;
+use plbrt\limit_login_attempts\Interfaces\UI;
 
 use Exception;
 

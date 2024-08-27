@@ -1,12 +1,12 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Notifications;
+namespace plbrt\limit_login_attempts\Notifications;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Actions;
+use plbrt\limit_login_attempts\Hooks\Actions;
 
-use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
-use Pressidium\Limit_Login_Attempts\Options\Options;
-use Pressidium\Limit_Login_Attempts\Plugin;
+use plbrt\limit_login_attempts\Login\State\Lockouts;
+use plbrt\limit_login_attempts\Options\Options;
+use plbrt\limit_login_attempts\Plugin;
 
 if (! defined('ABSPATH')) {
     exit;

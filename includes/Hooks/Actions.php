@@ -1,6 +1,6 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Hooks;
+namespace plbrt\limit_login_attempts\Hooks;
 
 // Prevent direct access to files
 if (! defined('ABSPATH')) {

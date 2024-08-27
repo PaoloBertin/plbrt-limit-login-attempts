@@ -1,6 +1,6 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Logging;
+namespace plbrt\limit_login_attempts\Logging;
 
 use Dotenv\Dotenv;
 use Monolog\Handler\StreamHandler;

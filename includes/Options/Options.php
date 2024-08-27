@@ -1,6 +1,6 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Options;
+namespace plbrt\limit_login_attempts\Options;
 
 if (! defined('ABSPATH')) {
     exit;

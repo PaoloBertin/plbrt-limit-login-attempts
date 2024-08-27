@@ -1,8 +1,8 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts;
+namespace plbrt\limit_login_attempts;
 
-use Pressidium\Limit_Login_Attempts\Options\WP_Options;
+use plbrt\limit_login_attempts\Options\WP_Options;
 
 if (! defined('ABSPATH')) {
     exit;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Statistics;
+namespace plbrt\limit_login_attempts\Statistics;
 
-use Pressidium\Limit_Login_Attempts\Interfaces\UI;
-use Pressidium\Limit_Login_Attempts\Interfaces\HTML;
+use plbrt\limit_login_attempts\Interfaces\UI;
+use plbrt\limit_login_attempts\Interfaces\HTML;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
-use Pressidium\Limit_Login_Attempts\Standalone\Button;
-use Pressidium\Limit_Login_Attempts\Options\Options;
+use plbrt\limit_login_attempts\Hooks\Hooks_Manager;
+use plbrt\limit_login_attempts\Standalone\Button;
+use plbrt\limit_login_attempts\Options\Options;
 
 if (! defined('ABSPATH')) {
     exit;

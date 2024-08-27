@@ -1,10 +1,10 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Notifications;
+namespace plbrt\limit_login_attempts\Notifications;
 
-use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
-use Pressidium\Limit_Login_Attempts\IP_Address;
-use Pressidium\Limit_Login_Attempts\Utils;
+use plbrt\limit_login_attempts\Login\State\Lockouts;
+use plbrt\limit_login_attempts\IP_Address;
+use plbrt\limit_login_attempts\Utils;
 
 if (! defined('ABSPATH')) {
     exit;

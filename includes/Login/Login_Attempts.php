@@ -1,14 +1,14 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Login;
+namespace plbrt\limit_login_attempts\Login;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Actions;
-use Pressidium\Limit_Login_Attempts\Hooks\Filters;
+use plbrt\limit_login_attempts\Hooks\Actions;
+use plbrt\limit_login_attempts\Hooks\Filters;
 
-use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
-use Pressidium\Limit_Login_Attempts\Login\State\Retries;
-use Pressidium\Limit_Login_Attempts\IP_Address;
-use Pressidium\Limit_Login_Attempts\Plugin;
+use plbrt\limit_login_attempts\Login\State\Lockouts;
+use plbrt\limit_login_attempts\Login\State\Retries;
+use plbrt\limit_login_attempts\IP_Address;
+use plbrt\limit_login_attempts\Plugin;
 
 use WP_Error;
 use WP_User;

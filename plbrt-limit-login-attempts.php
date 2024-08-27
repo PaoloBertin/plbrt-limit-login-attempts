@@ -10,7 +10,7 @@
  * License:     GPL-2.0+
  * Version:     1.0.0
  *
- * An object-oriented WordPress plugin based on prsdm-limit-login-attempts
+ * An object-oriented WordPress plugin based on plbrt-limit-login-attempts
  * by Pressidium
  * 
  * Based on Limit Login Attempts (http://devel.kostdoktorn.se/limit-login-attempts)
@@ -33,21 +33,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-namespace Pressidium\Limit_Login_Attempts;
+namespace plbrt\limit_login_attempts;
 
-use Pressidium\Limit_Login_Attempts\Logging\Log;
+use plbrt\limit_login_attempts\Logging\Log;
 
-use Pressidium\Limit_Login_Attempts\Options\Options;
-use Pressidium\Limit_Login_Attempts\Options\WP_Options;
-use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
-use Pressidium\Limit_Login_Attempts\Pages\Settings_Page;
-use Pressidium\Limit_Login_Attempts\Login\Login_Attempts;
-use Pressidium\Limit_Login_Attempts\Login\Login_Error;
-use Pressidium\Limit_Login_Attempts\Login\Cookie_Login;
-use Pressidium\Limit_Login_Attempts\Login\State\Retries;
-use Pressidium\Limit_Login_Attempts\Login\State\Lockouts;
-use Pressidium\Limit_Login_Attempts\Standalone\Lockout_Logs;
-use Pressidium\Limit_Login_Attempts\Notifications\Email_Notification;
+use plbrt\limit_login_attempts\Options\Options;
+use plbrt\limit_login_attempts\Options\WP_Options;
+use plbrt\limit_login_attempts\Hooks\Hooks_Manager;
+use plbrt\limit_login_attempts\Pages\Settings_Page;
+use plbrt\limit_login_attempts\Login\Login_Attempts;
+use plbrt\limit_login_attempts\Login\Login_Error;
+use plbrt\limit_login_attempts\Login\Cookie_Login;
+use plbrt\limit_login_attempts\Login\State\Retries;
+use plbrt\limit_login_attempts\Login\State\Lockouts;
+use plbrt\limit_login_attempts\Standalone\Lockout_Logs;
+use plbrt\limit_login_attempts\Notifications\Email_Notification;
 
 if (! defined('ABSPATH')) {
     exit;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Tables;
+namespace plbrt\limit_login_attempts\Tables;
 
-use Pressidium\Limit_Login_Attempts\Interfaces\UI;
+use plbrt\limit_login_attempts\Interfaces\UI;
 
 if (! defined('ABSPATH')) {
     exit;

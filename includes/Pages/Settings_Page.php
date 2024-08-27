@@ -1,19 +1,19 @@
 <?php
 
-namespace Pressidium\Limit_Login_Attempts\Pages;
+namespace plbrt\limit_login_attempts\Pages;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Actions;
+use plbrt\limit_login_attempts\Hooks\Actions;
 
-use Pressidium\Limit_Login_Attempts\Hooks\Hooks_Manager;
-use Pressidium\Limit_Login_Attempts\Sections\Fields\Elements\Element;
-use Pressidium\Limit_Login_Attempts\Statistics\Active_Lockouts;
-use Pressidium\Limit_Login_Attempts\Statistics\Total_Lockouts;
-use Pressidium\Limit_Login_Attempts\Standalone\Lockout_Logs;
-use Pressidium\Limit_Login_Attempts\Standalone\Admin_Notice;
-use Pressidium\Limit_Login_Attempts\IP_Address;
-use Pressidium\Limit_Login_Attempts\Options\Options;
-use Pressidium\Limit_Login_Attempts\Plugin;
-use Pressidium\Limit_Login_Attempts\Utils;
+use plbrt\limit_login_attempts\Hooks\Hooks_Manager;
+use plbrt\limit_login_attempts\Sections\Fields\Elements\Element;
+use plbrt\limit_login_attempts\Statistics\Active_Lockouts;
+use plbrt\limit_login_attempts\Statistics\Total_Lockouts;
+use plbrt\limit_login_attempts\Standalone\Lockout_Logs;
+use plbrt\limit_login_attempts\Standalone\Admin_Notice;
+use plbrt\limit_login_attempts\IP_Address;
+use plbrt\limit_login_attempts\Options\Options;
+use plbrt\limit_login_attempts\Plugin;
+use plbrt\limit_login_attempts\Utils;
 
 if (! defined('ABSPATH')) {
     exit;
