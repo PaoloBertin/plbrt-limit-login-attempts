@@ -53,8 +53,6 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('PLUGIN_NAME', 'plbrt-limit-login-attempts');
-
 class Plugin
 {
     const PREFIX = 'plbrt_limit_login_attempts';
@@ -86,8 +84,10 @@ class Plugin
      */
     private function require_files()
     {
+        // autooad file librerie
         require_once __DIR__ . '/vendor/autoload.php';
 
+        // autoload classi del plugin
         require_once __DIR__ . '/autoload.php';
         $autoloader = new Autoloader();
         $autoloader->register();
@@ -104,6 +104,10 @@ class Plugin
 
         if (! defined(__NAMESPACE__ . '\VERSION')) {
             define(__NAMESPACE__ . '\VERSION', '1.0.0');
+        }
+
+        if (! defined('\PLUGIN_NAME')) {
+            define('PLUGIN_NAME', 'plbrt-limit-login-attempts');
         }
     }
 
