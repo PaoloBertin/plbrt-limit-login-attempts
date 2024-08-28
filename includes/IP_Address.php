@@ -23,7 +23,9 @@ class IP_Address
      */
     public static function init($connection_type)
     {
-        self::$address = self::get_ip($connection_type);
+        $ip_address = self::get_ip($connection_type);
+        // self::$address = self::get_ip($connection_type);
+        self::$address = $ip_address;
     }
 
     /**

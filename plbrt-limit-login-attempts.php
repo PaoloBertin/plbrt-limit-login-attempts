@@ -123,6 +123,7 @@ class Plugin
         $this->hooks_manager = new Hooks_Manager();
         Log::debug('creato oggetto Hook_Manager');
 
+        // recupera indirizzo IP
         IP_Address::init($this->options->get('site_connection'));
 
         $lockout_logs = new Lockout_Logs($this->options, $this->hooks_manager);
